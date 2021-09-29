@@ -50,18 +50,6 @@
             <type>jar</type>
         </dependency>
         <dependency>
-            <groupId>dat.sem3</groupId>
-            <artifactId>fullCrud</artifactId>
-            <version>1.0.1</version>
-            <type>war</type>
-        </dependency>
-        <dependency>
-            <groupId>dat.sem3</groupId>
-            <artifactId>RESTfullPerson</artifactId>
-            <version>1.0.1</version>
-            <type>war</type>
-        </dependency>
-        <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
             <version>7.0</version>
