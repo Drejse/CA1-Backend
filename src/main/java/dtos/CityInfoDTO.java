@@ -1,4 +1,10 @@
+package dtos;
+
 import entities.CityInfo;
+import java.util.List;
+
+ //@author sebastianengelbrecht
+
 
 public class CityInfoDTO{
     
@@ -43,7 +49,6 @@ public class CityInfoDTO{
     public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
     }
-    
     
     
 }

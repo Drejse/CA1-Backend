@@ -16,7 +16,7 @@ import javax.persistence.TypedQuery;
 
 /**
  *
- * @author madr1
+ * @author madr1 & Sebastian
  */
 public class PersonFacade implements IPersonFacade{
     private static PersonFacade instance;

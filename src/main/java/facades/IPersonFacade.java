@@ -10,7 +10,7 @@ import dtos.PersonsDTO;
 
 /**
  *
- * @author mathias
+ * @author mathias & sebastian
  */
 public interface IPersonFacade {
   public PersonDTO addPerson(String fName, String lName, String phone) throws Exception;  
