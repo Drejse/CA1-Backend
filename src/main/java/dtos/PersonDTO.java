@@ -21,6 +21,7 @@ public class PersonDTO {
 
     public PersonDTO() {
     }
+    
     public PersonDTO(Person p) {
         this.email = p.getEmail();
         this.firstName = p.getFirstName();

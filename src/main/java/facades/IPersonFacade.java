@@ -17,6 +17,9 @@ public interface IPersonFacade {
   public PersonDTO deletePerson(int id) throws Exception;  
   public PersonDTO getPerson(int id) throws Exception;  
   public PersonsDTO getAllPersons();  
-  public PersonDTO editPerson(PersonDTO p) throws Exception;  
+  public PersonDTO editPerson(PersonDTO p) throws Exception;
+  public PersonsDTO getAllPersonsWithGivenHobby();
+  public PersonsDTO getAllPersonsWithGivenCity();
+  public PersonsDTO getNumberOfPersonsWithGivenHobby();
 }
 

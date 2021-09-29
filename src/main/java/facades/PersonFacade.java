@@ -94,7 +94,30 @@ public class PersonFacade implements IPersonFacade{
             em.close();
         }
     }
+    @Override
+    public PersonsDTO getAllPersonsWithGivenHobby(){
+        EntityManager em = emf.createEntityManager();
+        TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p JOIN p.hobbyCollection h WHERE h.name = :name",Person.class);
+        List<Person> persons = query.getResultList();
+        return new PersonsDTO(persons);
+    }
+        
+    @Override
+    public PersonsDTO getAllPersonsWithGivenCity(){
+        EntityManager em = emf.createEntityManager();
+        TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p JOIN p.addressCollection a WHERE a.cityInfoid.city = :city",Person.class);
+        List<Person> persons = query.getResultList();
+        return new PersonsDTO(persons);    
+    }
     
+    @Override
+    public PersonsDTO getNumberOfPersonsWithGivenHobby(){
+        EntityManager em = emf.createEntityManager();
+        TypedQuery<Person> query = em.createQuery("SELECT COUNT(h.name) p FROM Person p JOIN p.hobbyCollection h",Person.class);
+        System.out.println("Persons with given hobby is: " + query.getSingleResult());
+        return PersonsDTO(x);
+        
+    }
     //TODO
     // facades
   
