@@ -110,15 +110,15 @@ public class PersonFacade implements IPersonFacade{
         return new PersonsDTO(persons);    
     }
     
-    @Override
+    /*@Override
     public PersonsDTO getNumberOfPersonsWithGivenHobby(){
         EntityManager em = emf.createEntityManager();
         TypedQuery<Person> query = em.createQuery("SELECT COUNT(h.name) p FROM Person p JOIN p.hobbyCollection h",Person.class);
         System.out.println("Persons with given hobby is: " + query.getSingleResult());
-        return PersonsDTO(x);
+        return PersonsDTO(x); 
         
     }
     //TODO
-    // facades
+    // facades */
   
 }

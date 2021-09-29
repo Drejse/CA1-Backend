@@ -20,6 +20,6 @@ public interface IPersonFacade {
   public PersonDTO editPerson(PersonDTO p) throws Exception;
   public PersonsDTO getAllPersonsWithGivenHobby();
   public PersonsDTO getAllPersonsWithGivenCity();
-  public PersonsDTO getNumberOfPersonsWithGivenHobby();
+  //public PersonsDTO getNumberOfPersonsWithGivenHobby();
 }
 
