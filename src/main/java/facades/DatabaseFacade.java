@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package facades;
 
 import dtos.PersonDTO;
@@ -16,19 +11,22 @@ import javax.persistence.TypedQuery;
 
 /**
  *
- * @author madr1 & Sebastian
+ * @author 45319
  */
-public class PersonFacade{
-    private static PersonFacade instance;
+public class DatabaseFacade {
+    
+
+
+    private static DatabaseFacade instance;
     private static EntityManagerFactory emf;
     
     //Private Constructor to ensure Singleton
-    private PersonFacade() {}
+    private DatabaseFacade() {}
     
-    public static PersonFacade getPersonFacade(EntityManagerFactory _emf) {
+    public static DatabaseFacade getDatabaseFacade(EntityManagerFactory _emf) {
         if (instance == null) {
             emf = _emf;
-            instance = new PersonFacade();
+            instance = new DatabaseFacade();
         }
         return instance;
     }
