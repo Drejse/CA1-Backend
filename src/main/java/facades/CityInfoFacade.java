@@ -16,7 +16,7 @@ import javax.persistence.TypedQuery;
 /**
  *
  * @author sebastianengelbrecht
- */
+ *//*
 public class CityInfoFacade {
     
     private static CityInfoFacade instance;
@@ -39,4 +39,4 @@ public class CityInfoFacade {
         return new CityInfoDTO((CityInfo) cityInfo);
     
     } 
-}
+}*/

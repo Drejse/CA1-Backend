@@ -8,7 +8,6 @@ import java.util.List;
 
 public class CityInfoDTO{
     
-    private Integer id;
     private String city;
     private String zipCode;
 
@@ -18,7 +17,6 @@ public class CityInfoDTO{
     public CityInfoDTO(CityInfo c){
         this.city = c.getCity();
         this.zipCode = c.getZipCode();
-        this.id = c.getId();
     }
 
     public CityInfoDTO(String city, String zipCode) {
@@ -26,13 +24,6 @@ public class CityInfoDTO{
         this.zipCode = zipCode;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getCity() {
         return city;

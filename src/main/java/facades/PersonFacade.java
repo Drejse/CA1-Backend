@@ -18,7 +18,7 @@ import javax.persistence.TypedQuery;
  *
  * @author madr1 & Sebastian
  */
-public class PersonFacade implements IPersonFacade{
+public class PersonFacade{
     private static PersonFacade instance;
     private static EntityManagerFactory emf;
     
@@ -32,7 +32,7 @@ public class PersonFacade implements IPersonFacade{
         }
         return instance;
     }
-    @Override
+    
     public PersonDTO addPerson(String firstName, String lastName, String email) { 
         Person p = new Person(firstName,lastName,email);
         EntityManager em = emf.createEntityManager();
@@ -46,7 +46,7 @@ public class PersonFacade implements IPersonFacade{
         return new PersonDTO(p);
     }
 
-   @Override
+   
     public PersonDTO deletePerson(int id) throws Exception {
         EntityManager em = emf.createEntityManager();
         Person person;
@@ -62,7 +62,7 @@ public class PersonFacade implements IPersonFacade{
         
     }
 
-    @Override
+    
     public PersonDTO getPerson(int id) throws Exception {
         EntityManager em = emf.createEntityManager();
         Person p = em.find(Person.class, id);
@@ -72,7 +72,7 @@ public class PersonFacade implements IPersonFacade{
      
     }
 
-    @Override
+    
     public PersonsDTO getAllPersons() {
         EntityManager em = emf.createEntityManager();
         TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p", Person.class);
@@ -80,7 +80,7 @@ public class PersonFacade implements IPersonFacade{
         return new PersonsDTO(persons);
     }
 
-    @Override
+    
     public PersonDTO editPerson(PersonDTO p) throws Exception {
         
         EntityManager em = emf.createEntityManager();
@@ -94,6 +94,8 @@ public class PersonFacade implements IPersonFacade{
             em.close();
         }
     }
+    
+    /*
     @Override
     public PersonsDTO getAllPersonsWithGivenHobby(){
         EntityManager em = emf.createEntityManager();
@@ -108,7 +110,7 @@ public class PersonFacade implements IPersonFacade{
         TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p JOIN p.addressCollection a WHERE a.cityInfoid.city = :city",Person.class);
         List<Person> persons = query.getResultList();
         return new PersonsDTO(persons);    
-    }
+    }*/
     
     /*@Override
     public PersonsDTO getNumberOfPersonsWithGivenHobby(){

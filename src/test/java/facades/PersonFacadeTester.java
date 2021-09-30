@@ -10,24 +10,28 @@ import dtos.PersonsDTO;
 import entities.Person;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import static junit.framework.Assert.assertEquals;
 import junit.framework.TestCase;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import utils.EMF_Creator;
 
+
+
+
 /**
  *
  * @author madr1
  */
 /*
-public class PersonFacadeTest extends TestCase {
+public class PersonFacadeTester extends TestCase {
     
      private static EntityManagerFactory emf;
     private static PersonFacade facade;
     private static Person p1,p2,p3,p4;
     
-    public PersonFacadeTest(String testName) {
+    public PersonFacadeTester(String testName) {
         super(testName);
     }
     
@@ -63,7 +67,7 @@ public class PersonFacadeTest extends TestCase {
     }
 
    
- @Test
+    @Test
     public void testGetPerson() throws Exception {
         PersonDTO actPerson = facade.getPerson(p3.getId());
         assertEquals(actPerson.getId(),p3.getId());
@@ -104,3 +108,4 @@ public class PersonFacadeTest extends TestCase {
     }
 }
 */
+

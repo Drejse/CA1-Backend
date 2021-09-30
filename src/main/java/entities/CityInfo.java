@@ -6,7 +6,9 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -23,47 +25,32 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author madr1
+ * @author mathias
  */
 @Entity
-@Table(name = "cityInfo")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "CityInfo.findAll", query = "SELECT c FROM CityInfo c"),
-    @NamedQuery(name = "CityInfo.findById", query = "SELECT c FROM CityInfo c WHERE c.id = :id"),
-    @NamedQuery(name = "CityInfo.findByZipCode", query = "SELECT c FROM CityInfo c WHERE c.zipCode = :zipCode"),
-    @NamedQuery(name = "CityInfo.findByCity", query = "SELECT c FROM CityInfo c WHERE c.city = :city")})
+    @NamedQuery(name = "CityInfo.deleteAllRows", query = "DELETE from CityInfo")})
 public class CityInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "id")
-    private Integer id;
-    @Size(max = 45)
-    @Column(name = "zipCode")
+    @Size(max = 4)
     private String zipCode;
-    @Size(max = 45)
-    @Column(name = "City")
+    @Size(max = 35)
     private String city;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cityInfoid")
-    private Collection<Address> addressCollection;
+    @OneToMany(cascade = {CascadeType.PERSIST,CascadeType.REMOVE}, mappedBy = "cityInfo")
+    private List<Address> addressList;
 
     public CityInfo() {
     }
 
-    public CityInfo(Integer id) {
-        this.id = id;
+    public CityInfo(String zipCode,String city) {
+        this.zipCode = zipCode;
+        this.city = city;
+        this.addressList = new ArrayList<>();
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getZipCode() {
         return zipCode;
@@ -82,37 +69,28 @@ public class CityInfo implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Address> getAddressCollection() {
-        return addressCollection;
+    public Collection<Address> getAddressList() {
+        return addressList;
     }
 
-    public void setAddressCollection(Collection<Address> addressCollection) {
-        this.addressCollection = addressCollection;
-    }
+   
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof CityInfo)) {
-            return false;
+   public void addAddress(Address address) {
+        if (address != null){
+            this.addressList.add(address);
+            //Makes the relationship bi-directional
+            address.setCityInfo(this);
         }
-        CityInfo other = (CityInfo) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
     }
-
-    @Override
-    public String toString() {
-        return "entities.CityInfo[ id=" + id + " ]";
+    
+    
+    public void removeAddress(Address address) {
+        if (address != null){
+            this.addressList.remove(address);
+          
+            //Cascade will remove phone from DB.
+            address.setCityInfo(null);
+        }
     }
     
 }

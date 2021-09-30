@@ -7,8 +7,8 @@ package entities;
 
 import dtos.PersonDTO;
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,28 +17,21 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
+
 
 /**
  *
  * @author madr1
  */
 @Entity
-@Table(name = "person")
-@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Person.findAll", query = "SELECT p FROM Person p"),
-    @NamedQuery(name = "Person.findById", query = "SELECT p FROM Person p WHERE p.id = :id"),
-    @NamedQuery(name = "Person.findByFirstName", query = "SELECT p FROM Person p WHERE p.firstName = :firstName"),
-    @NamedQuery(name = "Person.findByLastName", query = "SELECT p FROM Person p WHERE p.lastName = :lastName"),
-    @NamedQuery(name = "Person.findByEmail", query = "SELECT p FROM Person p WHERE p.email = :email"),
     @NamedQuery(name = "Person.deleteAllRows", query = "DELETE from Person")
 })
    
@@ -47,27 +40,22 @@ public class Person implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id")
     private Integer id;
     @Size(max = 45)
-    @Column(name = "firstName")
     private String firstName;
     @Size(max = 45)
-    @Column(name = "lastName")
     private String lastName;
-    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
-    @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "email")
     private String email;
-    @ManyToMany(mappedBy = "personCollection")
-    private Collection<Hobby> hobbyCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personId")
-    private Collection<Address> addressCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personId")
-    private Collection<Phone> phoneCollection;
+    
+    @ManyToMany(mappedBy = "personList",  cascade = CascadeType.PERSIST)
+    private List<Hobby> hobbyList;
+    
+    @OneToMany(mappedBy = "person",  cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<Phone> phoneList;
+    
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    private Address address;
 
     public Person() {
     }
@@ -78,6 +66,8 @@ public class Person implements Serializable {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.hobbyList = new ArrayList<>();
+        this.phoneList = new ArrayList<>();
         
     }
     
@@ -120,56 +110,75 @@ public class Person implements Serializable {
         this.email = email;
     }
 
-    @XmlTransient
-    public Collection<Hobby> getHobbyCollection() {
-        return hobbyCollection;
+    public List<Hobby> getHobbyList() {
+        return hobbyList;
     }
 
-    public void setHobbyCollection(Collection<Hobby> hobbyCollection) {
-        this.hobbyCollection = hobbyCollection;
+    public void setHobbyList(List<Hobby> hobbyList) {
+        this.hobbyList = hobbyList;
     }
 
-    @XmlTransient
-    public Collection<Address> getAddressCollection() {
-        return addressCollection;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setAddressCollection(Collection<Address> addressCollection) {
-        this.addressCollection = addressCollection;
-    }
-
-    @XmlTransient
-    public Collection<Phone> getPhoneCollection() {
-        return phoneCollection;
-    }
-
-    public void setPhoneCollection(Collection<Phone> phoneCollection) {
-        this.phoneCollection = phoneCollection;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Person)) {
-            return false;
+      public void setAddress(Address address) {
+        this.address = address;
+        if(!address.getPersons().contains(this)){
+            //TODO: Make facade that checks if address is in DB and fetches it before just inserting a new one.
+            address.addPerson(this);
         }
-        Person other = (Person) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
+    }
+
+    public List<Phone> getPhoneList() {
+        return phoneList;
+    }
+
+    
+     public void addPhone(Phone phone) {
+        if (phone != null){
+            this.phoneList.add(phone);
+            //Makes the relationship bi-directional
+            phone.setPerson(this);
         }
-        return true;
+    }
+    
+    public void removePhone(Phone phone) {
+        if (phone != null){
+            this.phoneList.remove(phone);
+          
+            //Cascade will remove phone from DB.
+            phone.setPerson(null);
+        }
+    }
+    
+    
+    public void setPhoneList(List<Phone> phoneList) {
+        this.phoneList = phoneList;
+    }
+
+
+    public void addHobbies(Hobby hobby) {
+        if (hobby != null){
+            this.hobbyList.add(hobby);
+            //Makes the relationship bi-directional
+            hobby.getPersonList().add(this);
+        }
+    }
+    
+    public void removeHobby(Hobby hobby) {
+        if (hobby != null){
+            this.hobbyList.remove(hobby);
+            hobby.getPersonList().remove(this);
+        }
     }
 
     @Override
     public String toString() {
-        return "entities.Person[ id=" + id + " ]";
+        return "Person{" + "id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", hobbyCollection=" + hobbyList + ", address=" + address + ", phoneCollection=" + phoneList + '}';
     }
+
+   
+    
     
 }

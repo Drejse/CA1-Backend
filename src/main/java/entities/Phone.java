@@ -9,6 +9,8 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -21,39 +23,38 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author madr1
+ * @author mathias
  */
 @Entity
-@Table(name = "phone")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Phone.findAll", query = "SELECT p FROM Phone p"),
-    @NamedQuery(name = "Phone.findById", query = "SELECT p FROM Phone p WHERE p.id = :id"),
-    @NamedQuery(name = "Phone.findByNumber", query = "SELECT p FROM Phone p WHERE p.number = :number"),
-    @NamedQuery(name = "Phone.findByDescription", query = "SELECT p FROM Phone p WHERE p.description = :description")})
+    @NamedQuery(name = "Phone.deleteAllRows", query = "DELETE from Phone")
+})
 public class Phone implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @Basic(optional = false)
+    @Basic
     @NotNull
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Size(max = 45)
-    @Column(name = "number")
+    @Column(name = "number", unique=true) // ensures that no dublicates can be made because number is unique.
     private String number;
     @Size(max = 45)
     @Column(name = "description")
     private String description;
     @JoinColumn(name = "person_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Person personId;
+    @ManyToOne
+    private Person person;
 
     public Phone() {
     }
 
-    public Phone(Integer id) {
-        this.id = id;
+    public Phone(String number, String description) {
+        this.number = number;
+        this.description = description;
     }
 
     public Integer getId() {
@@ -80,37 +81,14 @@ public class Phone implements Serializable {
         this.description = description;
     }
 
-    public Person getPersonId() {
-        return personId;
+    public Person getPerson() {
+        return person;
     }
 
-    public void setPersonId(Person personId) {
-        this.personId = personId;
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Phone)) {
-            return false;
-        }
-        Phone other = (Phone) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "entities.Phone[ id=" + id + " ]";
-    }
+  
     
 }
