@@ -3,6 +3,7 @@ package facades;
 import dtos.PersonDTO;
 import dtos.PersonsDTO;
 import entities.Address;
+import entities.Hobby;
 import entities.Person;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -93,32 +94,30 @@ public class DatabaseFacade {
         }
     }
     
-    /*
-    @Override
-    public PersonsDTO getAllPersonsWithGivenHobby(){
-        EntityManager em = emf.createEntityManager();
-        TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p JOIN p.hobbyCollection h WHERE h.name = :name",Person.class);
-        List<Person> persons = query.getResultList();
-        return new PersonsDTO(persons);
-    }
-        
-    @Override
-    public PersonsDTO getAllPersonsWithGivenCity(){
-        EntityManager em = emf.createEntityManager();
-        TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p JOIN p.addressCollection a WHERE a.cityInfoid.city = :city",Person.class);
-        List<Person> persons = query.getResultList();
-        return new PersonsDTO(persons);    
-    }*/
     
-    /*@Override
-    public PersonsDTO getNumberOfPersonsWithGivenHobby(){
+    
+       /* public List<Person> getAllPersonsWithGivenHobby(String hobby){
         EntityManager em = emf.createEntityManager();
-        TypedQuery<Person> query = em.createQuery("SELECT COUNT(h.name) p FROM Person p JOIN p.hobbyCollection h",Person.class);
-        System.out.println("Persons with given hobby is: " + query.getSingleResult());
-        return PersonsDTO(x); 
+        TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p JOIN p.hobbyList h WHERE h.name = :name",Person.class);
+        query.setParameter("name", hobby);
+        return query.getResultList();
         
     }
-    //TODO
-    // facades */
+        
+    
+        public List<Person> getAllPersonsWithGivenCity(String zipCode){
+        EntityManager em = emf.createEntityManager();
+        TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p JOIN p.address a WHERE a.cityInfoid.city = :city",Person.class);
+        query.setParameter("city", zipCode);
+        return query.getResultList();
+        } */
+   
   
+        public void getNumberOfPersonsWithGivenHobby(String hobby){
+        EntityManager em = emf.createEntityManager();
+        TypedQuery<Person> query = em.createQuery("SELECT COUNT(DISTINCT p) FROM Person p JOIN p.hobbyList h WHERE h.name = :hobbyname",Person.class);
+        query.setParameter("hobbyname", hobby);
+            System.out.println("total: " + query.getSingleResult());
+    }
+   
 }
