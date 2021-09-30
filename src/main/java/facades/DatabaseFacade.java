@@ -2,12 +2,11 @@ package facades;
 
 import dtos.PersonDTO;
 import dtos.PersonsDTO;
-import entities.Address;
-import entities.Hobby;
 import entities.Person;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 /**
@@ -94,9 +93,16 @@ public class DatabaseFacade {
         }
     }
     
+        public List<Person> getPersonFromPhoneNumber(String number) {
+        EntityManager em = emf.createEntityManager();
+        TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p JOIN p.address h WHERE p.number = :number",Person.class);
+        List<Person> person = query.setParameter("number", number).getResultList();
+        return person;
+    }
     
     
-       /* public List<Person> getAllPersonsWithGivenHobby(String hobby){
+    
+        public List<Person> getAllPersonsWithGivenHobby(String hobby){
         EntityManager em = emf.createEntityManager();
         TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p JOIN p.hobbyList h WHERE h.name = :name",Person.class);
         query.setParameter("name", hobby);
@@ -110,14 +116,16 @@ public class DatabaseFacade {
         TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p JOIN p.address a WHERE a.cityInfoid.city = :city",Person.class);
         query.setParameter("city", zipCode);
         return query.getResultList();
-        } */
+        } 
    
   
-        public void getNumberOfPersonsWithGivenHobby(String hobby){
+        public int getNumberOfPersonsWithGivenHobby(String hobby){
         EntityManager em = emf.createEntityManager();
-        TypedQuery<Person> query = em.createQuery("SELECT COUNT(DISTINCT p) FROM Person p JOIN p.hobbyList h WHERE h.name = :hobbyname",Person.class);
-        query.setParameter("hobbyname", hobby);
-            System.out.println("total: " + query.getSingleResult());
+        Query query = em.createQuery("SELECT COUNT(distinct p) from Person p INNER JOIN p.hobbyList h where h.name = :hobbyName");
+        query.setParameter("hobbyName", hobby);
+        Long result = (Long) query.getSingleResult();
+        return result.intValue();
+
     }
-   
+        
 }
