@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package rest;
+/*package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -22,10 +22,14 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import utils.EMF_Creator;
 
+
 /**
  *
  * @author madr1
  *//*
+
+
+>>>>>>> d665fab5160d97b60e8703effbd23e08463256e9
 @Path("person")
 
 public class PersonResource {
@@ -79,4 +83,6 @@ public class PersonResource {
         return Response.ok("{\"status\" : \"removed id:"+pDto.getId()+"\"}", MediaType.APPLICATION_JSON).build();
     }
 }
+<<<<<<< HEAD
 */
+
