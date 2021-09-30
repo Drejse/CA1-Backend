@@ -8,7 +8,7 @@ package rest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dtos.PersonDTO;
-import facades.PersonFacade;
+//import facades.PersonFacade;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -25,13 +25,14 @@ import utils.EMF_Creator;
 /**
  *
  * @author madr1
- */
+ *//*
 @Path("person")
+
 public class PersonResource {
 
     private final EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory();
        
-    private final PersonFacade facade =  PersonFacade.getPersonFacade(emf);
+    //private final PersonFacade facade =  PersonFacade.getPersonFacade(emf);
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
           
   
@@ -78,3 +79,4 @@ public class PersonResource {
         return Response.ok("{\"status\" : \"removed id:"+pDto.getId()+"\"}", MediaType.APPLICATION_JSON).build();
     }
 }
+*/
