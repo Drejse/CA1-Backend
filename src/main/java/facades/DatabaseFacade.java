@@ -2,6 +2,7 @@ package facades;
 
 import dtos.PersonDTO;
 import dtos.PersonsDTO;
+import entities.CityInfo;
 import entities.Person;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -125,6 +126,13 @@ public class DatabaseFacade {
         query.setParameter("hobbyName", hobby);
         Long result = (Long) query.getSingleResult();
         return result.intValue();
+    }
+        public List<CityInfo> getAllZipCodes() {
+        EntityManager em = emf.createEntityManager();
+        List<CityInfo> cityInfos;
+        TypedQuery<CityInfo> query = em.createQuery("SELECT c.zipCode FROM CityInfo c", CityInfo.class);
+        cityInfos = query.getResultList();
+        return cityInfos;
 
     }
         
