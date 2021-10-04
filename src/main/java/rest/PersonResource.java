@@ -3,11 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-/*package rest;
+package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dtos.PersonDTO;
+import facades.DatabaseFacade;
+import facades.PersonFacade;
 //import facades.PersonFacade;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.Consumes;
@@ -26,25 +28,25 @@ import utils.EMF_Creator;
 /**
  *
  * @author madr1
- *//*
+ */
 
 
->>>>>>> d665fab5160d97b60e8703effbd23e08463256e9
 @Path("person")
 
 public class PersonResource {
 
     private final EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory();
        
-    //private final PersonFacade facade =  PersonFacade.getPersonFacade(emf);
+    private final DatabaseFacade facade =  DatabaseFacade.getDatabaseFacade(emf);
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
           
-  
     @GET
     @Produces({MediaType.APPLICATION_JSON}) 
-    public Response getAllPersons() {
-        return Response.ok(gson.toJson(facade.getAllPersons()), MediaType.APPLICATION_JSON).build();
+    public Response getServerIsUp() {
+        return Response.ok(gson.toJson("WELCOME!"), MediaType.APPLICATION_JSON).build();
     }
+    
+    
     
     @Path("{id}")
     @GET
@@ -53,7 +55,7 @@ public class PersonResource {
         PersonDTO pdto = facade.getPerson(id);
         return Response.ok(gson.toJson(pdto), MediaType.APPLICATION_JSON).build();
     }
-    
+    /*
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -81,8 +83,8 @@ public class PersonResource {
     public Response deletePerson (@PathParam("id")int id) throws Exception{
         PersonDTO pDto = facade.deletePerson(id);
         return Response.ok("{\"status\" : \"removed id:"+pDto.getId()+"\"}", MediaType.APPLICATION_JSON).build();
-    }
+    }*/
 }
-<<<<<<< HEAD
-*/
+
+
 
