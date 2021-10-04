@@ -41,7 +41,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 //Uncomment the line below, to temporarily disable this test
-//@Disabled
+@Disabled
 public class PersonResourceTest {
 
     private static final int SERVER_PORT = 7777;
@@ -128,14 +128,13 @@ public class PersonResourceTest {
             p2.addHobbies(hobby1);
             
             try {
-            em.getTransaction().begin();/*
+            em.getTransaction().begin();
                 em.createNamedQuery("Hobby.deleteAllRows").executeUpdate();
                 em.createNamedQuery("Phone.deleteAllRows").executeUpdate();
                 em.createNamedQuery("Person.deleteAllRows").executeUpdate();
                 em.createNamedQuery("Address.deleteAllRows").executeUpdate();
                 em.createNamedQuery("CityInfo.deleteAllRows").executeUpdate();
-                */
-                //Persists Hobbies and CityInfo as we dont execute script in test.
+                
                 
                 em.persist(hobby1);
                 em.persist(hobby2);
@@ -153,7 +152,7 @@ public class PersonResourceTest {
                     }
     }
 
-    //@Test
+    @Test
     public void testWrongURL() {
         given().when().get("/person/url/findes/ikke").then().statusCode(500);
     }
@@ -238,7 +237,7 @@ public class PersonResourceTest {
     }
     
     
-    
+    /*
     //@Test
     public void testAddPersonFail() {
         JSONObject requestParams = new JSONObject();
@@ -255,6 +254,7 @@ public class PersonResourceTest {
                 .assertThat()
                 .statusCode(400);
     }
+*/
     
 } 
 

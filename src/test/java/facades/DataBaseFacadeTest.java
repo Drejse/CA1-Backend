@@ -95,13 +95,13 @@ public class DataBaseFacadeTest {
             p2.addHobbies(hobby1);
             try {
             em.getTransaction().begin();
-            /*
+            
                 em.createNamedQuery("Hobby.deleteAllRows").executeUpdate();
                 em.createNamedQuery("Phone.deleteAllRows").executeUpdate();
                 em.createNamedQuery("Person.deleteAllRows").executeUpdate();
                 em.createNamedQuery("Address.deleteAllRows").executeUpdate();
                 em.createNamedQuery("CityInfo.deleteAllRows").executeUpdate();
-              */  
+              
                 //Persists Hobbies and CityInfo as we dont execute script in test.
                 em.persist(hobby1);
                 em.persist(hobby2);
