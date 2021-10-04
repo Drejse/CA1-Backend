@@ -2,8 +2,11 @@ package facades;
 
 import dtos.PersonDTO;
 import dtos.PersonsDTO;
+import entities.Address;
 import entities.CityInfo;
+import entities.Hobby;
 import entities.Person;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -12,7 +15,7 @@ import javax.persistence.TypedQuery;
 
 /**
  *
- * @author 45319
+ * @author Mathias
  */
 public class DatabaseFacade {
     
@@ -31,30 +34,58 @@ public class DatabaseFacade {
         }
         return instance;
     }
+
     
-    public PersonDTO addPerson(String firstName, String lastName, String email) { 
-        Person p = new Person(firstName,lastName,email);
+     public Person addPerson(Person person)throws Exception{
+        
         EntityManager em = emf.createEntityManager();
-        try {
+        try{
             em.getTransaction().begin();
-            em.persist(p);
+            try{
+                if(person.getAddress().getId() != null){
+                Address address = em.find(Address.class, person.getAddress().getId());
+                person.setAddress(address);
+                }
+            }catch(Exception e) {
+                System.out.println(e);
+            }
+            
+            em.persist(person);
+            if(person.getHobbyList().size() > 0) {
+                List<Hobby> hobbyArr = new ArrayList<>();
+                hobbyArr.addAll(person.getHobbyList());
+                person.getHobbyList().clear();
+                int arraySize = hobbyArr.size();
+                for(int i = 0; i < arraySize; i++) {
+                    Hobby hobby = em.find(Hobby.class, hobbyArr.get(i).getName());
+                    if(hobby == null){
+                        throw new Exception("Hobby not found");
+                    }else{
+                        person.addHobbies(hobby);
+                    }
+                }
+            }
             em.getTransaction().commit();
-        } finally {
+        }
+        finally{
             em.close();
         }
-        return new PersonDTO(p);
+        return person;
     }
 
    
-    public PersonDTO deletePerson(int id) throws Exception {
+    public void deletePerson(int id) throws Exception {
         EntityManager em = emf.createEntityManager();
         Person person;
         try {
             em.getTransaction().begin();
                 person = em.find(Person.class, id);
+                if(person == null){
+                    throw new Exception("could not delete, no id found");
+                }
                 em.remove(person);
                 em.getTransaction().commit();
-            return new PersonDTO(person);
+            
         } finally {
             em.close();
         }
@@ -72,11 +103,11 @@ public class DatabaseFacade {
     }
 
     
-    public PersonsDTO getAllPersons() {
+    public List<Person> getAllPersons() throws Exception{
         EntityManager em = emf.createEntityManager();
         TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p", Person.class);
         List<Person> persons = query.getResultList();
-        return new PersonsDTO(persons);
+        return persons;
     }
 
     
@@ -94,43 +125,54 @@ public class DatabaseFacade {
         }
     }
     
-        public List<Person> getPersonFromPhoneNumber(String number) {
+        public Person getPersonFromPhoneNumber(String number)throws Exception {
         EntityManager em = emf.createEntityManager();
+        Person person = null;
+        
         TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p JOIN p.address h WHERE p.number = :number",Person.class);
-        List<Person> person = query.setParameter("number", number).getResultList();
+        query.setParameter("number", number);
+        person = query.getSingleResult();
+        
         return person;
     }
     
     
     
-        public List<Person> getAllPersonsWithGivenHobby(String hobby){
+        public List<Person> getAllPersonsWithGivenHobby(String hobby)throws Exception{
         EntityManager em = emf.createEntityManager();
+        List<Person> personList;
         TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p JOIN p.hobbyList h WHERE h.name = :name",Person.class);
         query.setParameter("name", hobby);
-        return query.getResultList();
+        personList = query.getResultList();
+        return personList;
         
     }
         
     
-        public List<Person> getAllPersonsWithGivenCity(String zipCode){
+        public List<Person> getAllPersonsWithGivenCity(String zipCode)throws Exception{
         EntityManager em = emf.createEntityManager();
-        TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p JOIN p.address a WHERE a.cityInfoid.city = :city",Person.class);
-        query.setParameter("city", zipCode);
-        return query.getResultList();
+        List<Person> personList;
+        TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p JOIN p.address a join a.cityInfo c where c.zipCode = :zip",Person.class);
+        query.setParameter("zip", zipCode);
+        personList = query.getResultList();
+        return personList;
         } 
    
   
-        public int getNumberOfPersonsWithGivenHobby(String hobby){
+        public int getNumberOfPersonsWithGivenHobby(String hobby)throws Exception{
         EntityManager em = emf.createEntityManager();
         Query query = em.createQuery("SELECT COUNT(distinct p) from Person p INNER JOIN p.hobbyList h where h.name = :hobbyName");
         query.setParameter("hobbyName", hobby);
         Long result = (Long) query.getSingleResult();
         return result.intValue();
     }
-        public List<CityInfo> getAllZipCodes() {
+        
+        
+        
+        public List<CityInfo> getAllZipCodes() throws Exception{
         EntityManager em = emf.createEntityManager();
         List<CityInfo> cityInfos;
-        TypedQuery<CityInfo> query = em.createQuery("SELECT c.zipCode FROM CityInfo c", CityInfo.class);
+        TypedQuery<CityInfo> query = em.createQuery("SELECT c FROM CityInfo c", CityInfo.class);
         cityInfos = query.getResultList();
         return cityInfos;
 

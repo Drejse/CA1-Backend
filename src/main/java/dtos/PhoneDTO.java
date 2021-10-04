@@ -6,12 +6,14 @@
 package dtos;
 
 import entities.Phone;
+import java.util.ArrayList;
+import java.util.List;
 /**
  *
  * @author 45319
  */
 public class PhoneDTO {
-    private Integer id;
+    private int id;
     private String number;
     private String description;
     
@@ -28,11 +30,17 @@ public class PhoneDTO {
         this.description = description;
     }
 
-    public Integer getId() {
+      public static List<PhoneDTO> getDtos(List<Phone> phones) {
+        List<PhoneDTO> phonesDTO = new ArrayList();
+        phones.forEach(phone -> phonesDTO.add(new PhoneDTO(phone)));
+        return phonesDTO;
+    }
+      
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 

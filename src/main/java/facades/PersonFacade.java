@@ -6,6 +6,8 @@
 package facades;
 
 import dtos.PersonDTO;
+import entities.Address;
+import entities.Person;
 import static facades.DatabaseFacade.getDatabaseFacade;
 import javax.persistence.EntityManagerFactory;
 
@@ -25,12 +27,13 @@ public class PersonFacade {
         }
         return personFacade;
     }
-    /*
+    
     public PersonDTO getPersonFromPhoneNumber(String number) throws Exception{
-        return new PersonDTO(databaseFacade.getPersonByPhoneNumber(number));
+        return new PersonDTO((Person) databaseFacade.getPersonFromPhoneNumber(number));
         
+    
     }
-*/
+ 
     /*
     public PersonDTO getAllPersonsWithGivenHobby(String hobby){
         return new PersonDTO(databaseFacade.getAllPersonsWithGivenHobby(hobby));

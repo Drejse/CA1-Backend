@@ -13,20 +13,24 @@ import entities.Person;
  * @author madr1
  */
 public class PersonDTO {
-    private Integer id;
+    private int id;
     private String firstName;
     private String lastName;
     private String email;
-    
+    private AddressDTO adress;
 
     public PersonDTO() {
     }
     
     public PersonDTO(Person p) {
+         if (p.getId() != null) {
+            this.id = p.getId();
+        }
         this.email = p.getEmail();
         this.firstName = p.getFirstName();
         this.lastName = p.getLastName();
-        this.id = p.getId();
+        
+        
     }
     
      public PersonDTO(String fn,String ln, String email) {
@@ -37,7 +41,16 @@ public class PersonDTO {
         
     }
 
-    public Integer getId() {
+    public AddressDTO getAdress() {
+        return adress;
+    }
+
+    public void setAdress(AddressDTO adress) {
+        this.adress = adress;
+    }
+
+     
+    public int getId() {
         return id;
     }
 

@@ -14,37 +14,24 @@ import java.util.List;
  * @author 45319
  */
 public class HobbyDTO {
-    private Integer id;
     private String name;
-    private String description;
+    private String wikiLink;
+    private String category;
+    private String type;
     
     public HobbyDTO() {}
     
-    public HobbyDTO(Hobby h) {
-        this.id = h.getId();
-        this.name = h.getName();
+    public HobbyDTO(Hobby hobby) {
+        this.name = hobby.getName();
+        this.wikiLink = hobby.getWikiLink();
+        this.category = hobby.getCategory();
+        this.type = hobby.getType();
     }
     
-    public HobbyDTO(String name, String description) {
-        this.name = name;
-        this.description = description;
-    }
-    
-    
-   
-
-    public static List<HobbyDTO> getDTO(List<Hobby> hobbies) {
-        List<HobbyDTO> hobbyDTO = new ArrayList();
-        hobbies.forEach(hobby -> hobbyDTO.add(new HobbyDTO(hobby)));
-        return hobbyDTO;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
+     public static List<HobbyDTO> getDtos(List<Hobby> hobbies) {
+        List<HobbyDTO> hobbiesDTO = new ArrayList();
+        hobbies.forEach(hobby -> hobbiesDTO.add(new HobbyDTO(hobby)));
+        return hobbiesDTO;
     }
 
     public String getName() {
@@ -55,13 +42,31 @@ public class HobbyDTO {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    public String getWikiLink() {
+        return wikiLink;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setWikiLink(String wikiLink) {
+        this.wikiLink = wikiLink;
     }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+    
+   
     
     
     

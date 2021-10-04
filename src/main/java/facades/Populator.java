@@ -28,20 +28,20 @@ public class Populator {
        Hobby hobby2 = em.find(Hobby.class,"Bowling");
         
     */
-        CityInfo ci1 = em.find(CityInfo.class, "2730");
-        CityInfo ci2 = em.find(CityInfo.class, "2900");
+        CityInfo ci1 = em.find(CityInfo.class, "3450");
+        CityInfo ci2 = em.find(CityInfo.class, "3400");
       
        
         Person p1 = new Person("Mathias","Drejer","MathiasDenBedste@email.dk");
         Person p2 = new Person("Sebastian","Engelbrecht","RandomEmail@email.dk");
         Person p3 = new Person("Tobias","Linge","SejeTobias@email.dk");
     
-        Phone phone1 = new Phone("22346520","MathiasTlf");
-        Phone phone2 = new Phone("90285299","SebbeTelef");
-        Phone phone3 = new Phone("11121212","TobbeTelefon");
+        Phone phone1 = new Phone("22222222","MathiasTlf");
+        Phone phone2 = new Phone("33333333","SebbeTelef");
+        Phone phone3 = new Phone("55555555","TobbeTelefon");
         
-        Address a1 = new Address("Sejevej 1", "random");
-        Address a2 = new Address("denBedsteVej 2", "random");
+        Address a1 = new Address("coolvej 5", "random");
+        Address a2 = new Address("awsomevej5", "random");
        
         a1.setCityInfo(ci1);
         ci2.addAddress(a2);
@@ -71,10 +71,10 @@ public class Populator {
         
         System.out.println("-------------------------------------");
         
-        a1.getPersons().forEach(x -> System.out.println("persons from address A1 "+a1.getId()+"   ---   "+x));
+        a1.getPersons().forEach(x -> System.out.println("get person from a1 "+a1.getId()+"   ---   "+x));
         System.out.println(p2.getAddress());
        
-        System.out.println("ZIP-ADDRESS CHECK");
+        System.out.println("Checking zip address");
         System.out.println(p1.getAddress().getCityInfo().getZipCode());
         ci1.getAddressList().forEach(x->x.getPersons().forEach(y->System.out.println(y.getFirstName())));
     }
