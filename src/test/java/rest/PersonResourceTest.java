@@ -135,7 +135,7 @@ public class PersonResourceTest {
                 em.createNamedQuery("Address.deleteAllRows").executeUpdate();
                 em.createNamedQuery("CityInfo.deleteAllRows").executeUpdate();
                 */
-                //Persists Hobbies and CityInfo as we dont execute script in test.
+              
                 
                 em.persist(hobby1);
                 em.persist(hobby2);
