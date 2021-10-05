@@ -1,5 +1,7 @@
 package facades;
 
+import dtos.CityInfoDTO;
+import dtos.CityInfosDTO;
 import dtos.HobbyDTO;
 import dtos.PersonDTO;
 import dtos.PersonsDTO;
@@ -116,24 +118,24 @@ public class DatabaseFacade {
     
          
     
-        public List<Person> getAllPersonsWithGivenHobby(String hobby)throws Exception{
+        public PersonsDTO getAllPersonsWithGivenHobby(String hobby)throws Exception{
         EntityManager em = emf.createEntityManager();
         List<Person> personList;
         TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p JOIN p.hobbyList h WHERE h.name = :name",Person.class);
         query.setParameter("name", hobby);
         personList = query.getResultList();
-        return personList;
+        return new PersonsDTO(personList);
         
     }
         
     
-        public List<Person> getAllPersonsWithGivenCity(String zipCode)throws Exception{
+        public PersonsDTO getAllPersonsWithGivenCity(String zipCode)throws Exception{
         EntityManager em = emf.createEntityManager();
         List<Person> personList;
         TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p JOIN p.address a join a.cityInfo c where c.zipCode = :zip",Person.class);
         query.setParameter("zip", zipCode);
         personList = query.getResultList();
-        return personList;
+        return new PersonsDTO(personList);
         } 
    
   
@@ -147,12 +149,12 @@ public class DatabaseFacade {
         
         
         
-        public List<CityInfo> getAllZipCodes() throws Exception{
+        public CityInfosDTO getAllZipCodes() throws Exception{
         EntityManager em = emf.createEntityManager();
         List<CityInfo> cityInfos;
         TypedQuery<CityInfo> query = em.createQuery("SELECT c FROM CityInfo c", CityInfo.class);
         cityInfos = query.getResultList();
-        return cityInfos;
+        return new CityInfosDTO(cityInfos);
 
     }
         
@@ -166,6 +168,10 @@ public class DatabaseFacade {
           }
         }
 */
+
+    private List<CityInfo> CityInfoDTO(List<CityInfo> cityInfos) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
     
 

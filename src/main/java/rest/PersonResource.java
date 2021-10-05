@@ -98,16 +98,16 @@ public class PersonResource {
     @Path("/zip/allzip")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllZipCodes(@PathParam("allzipcodes") String zipCode) throws Exception{
+    public Response getAllZipCodes() throws Exception{
         return Response.ok(gson.toJson(facade.getAllZipCodes()), MediaType.APPLICATION_JSON).build();
     }
-   /* 
-    @Path("{personwithhobby}")
+   /**/
+    @Path("/byhobby/number/{personwithhobby}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getNumberOfPersonsWithGivenHobby(@PathParam("personwithhobby") String hobby) throws Exception{
         return Response.ok(gson.toJson(facade.getNumberOfPersonsWithGivenHobby(hobby)), MediaType.APPLICATION_JSON).build();
-    }*/
+    }
 }
     /*
        @Path("{id}")

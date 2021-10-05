@@ -5,10 +5,15 @@
  */
 package facades;
 
+import com.google.gson.JsonObject;
+import dtos.CityInfosDTO;
 import dtos.PersonDTO;
+import dtos.PersonsDTO;
 import entities.Address;
+import entities.CityInfo;
 import entities.Person;
 import static facades.DatabaseFacade.getDatabaseFacade;
+import java.util.List;
 import javax.persistence.EntityManagerFactory;
 
 /**
@@ -30,15 +35,32 @@ public class PersonFacade {
     
     public PersonDTO getPersonFromPhoneNumber(String number) throws Exception{
         return databaseFacade.getPersonFromPhoneNumber(number);
-        
+    }
     
+    public List<Person> getAllPersons() throws Exception {
+        return databaseFacade.getAllPersons();
+    }
+    
+    public CityInfosDTO getAllZipCodes() throws Exception {
+        return databaseFacade.getAllZipCodes();
+    }
+    
+    public PersonsDTO getAllPersonsWithGivenCity(String zipCode) throws Exception{
+        return databaseFacade.getAllPersonsWithGivenCity(zipCode);
     }
  
-    /*
-    public PersonDTO getAllPersonsWithGivenHobby(String hobby){
-        return new PersonDTO(databaseFacade.getAllPersonsWithGivenHobby(hobby));
+   
+    public PersonsDTO getAllPersonsWithGivenHobby(String hobby) throws Exception{
+        return databaseFacade.getAllPersonsWithGivenHobby(hobby);
     }
-*/
+    
+    public JsonObject getNumberOfPersonsWithGivenHobby(String hobby) throws Exception{
+        JsonObject json = new JsonObject();
+        int amount = databaseFacade.getNumberOfPersonsWithGivenHobby(hobby);
+        json.addProperty("amount", amount);
+        return json;
+    }
+
     
     
 }
