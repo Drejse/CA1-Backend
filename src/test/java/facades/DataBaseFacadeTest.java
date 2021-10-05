@@ -205,7 +205,7 @@ public DatabaseFacadeTest(){}
         List<Person> result = facade.getAllPersons();
         assertEquals(expResult, result.size());
     }
-   */
+   *//*
     //Author Tobias
     @Test
     public void testPersonFromPhoneNumber() throws Exception {

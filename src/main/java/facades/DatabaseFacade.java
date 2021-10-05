@@ -103,7 +103,7 @@ public class DatabaseFacade {
         }
     }
     
-        public Person getPersonFromPhoneNumber(String number)throws Exception {
+        public PersonDTO getPersonFromPhoneNumber(String number)throws Exception {
         EntityManager em = emf.createEntityManager();
         Person person = null;
         
@@ -111,7 +111,7 @@ public class DatabaseFacade {
         query.setParameter("number", number);
         person = query.getSingleResult();
         
-        return person;
+        return new PersonDTO(person);
     }
     
          

@@ -29,7 +29,7 @@ public class PersonFacade {
     }
     
     public PersonDTO getPersonFromPhoneNumber(String number) throws Exception{
-        return new PersonDTO((Person) databaseFacade.getPersonFromPhoneNumber(number));
+        return databaseFacade.getPersonFromPhoneNumber(number);
         
     
     }

@@ -96,7 +96,7 @@ public class PersonResourceTest {
     @BeforeEach
     public void setUp() {
         EntityManager em = emf.createEntityManager();
-        /**/
+        /*
            hobby1 = new Hobby("Hobby1", "http://www.test1.com", "cat1", "type1");
             hobby2 = new Hobby("Hobby2", "http://www.test2.com", "cat2", "type2");
 
@@ -151,7 +151,7 @@ public class PersonResourceTest {
             }
             finally{
             em.close();
-                    }
+                    }*/
     }
 /*
     @Test
@@ -238,7 +238,7 @@ public class PersonResourceTest {
                 .body("status", is("removed id:"+id));
     }
    
-    */
+    
     @Test
     public void testPersonsByGivenCity() {
         given()
@@ -287,7 +287,7 @@ public class PersonResourceTest {
                 .assertThat()
                 .statusCode(HttpStatus.OK_200.getStatusCode())
                 .body("all", hasSize(2));
-    } 
+    } */
 } 
 
 
