@@ -11,6 +11,7 @@ import dtos.PersonDTO;
 import entities.Person;
 import facades.DatabaseFacade;
 import facades.PersonFacade;
+import java.util.List;
 //import facades.PersonFacade;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.Consumes;
@@ -48,7 +49,13 @@ public class PersonResource {
         return Response.ok(gson.toJson("WELCOME!"), MediaType.APPLICATION_JSON).build();
     }
     
-    
+    @Path("/allpersons")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllPersons() throws Exception {
+        List<Person> persons = facade.getAllPersons();
+        return Response.ok(gson.toJson(persons), MediaType.APPLICATION_JSON).build();
+    }
     
     @Path("{id}")
     @GET
@@ -65,7 +72,13 @@ public class PersonResource {
         return facade.addPerson(p);
 
   } */
-    /*
+    @Path("/number/{number}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getPersonFromPhoneNumber(@PathParam("number") String number) throws Exception{
+        return Response.ok(gson.toJson(facade.getPersonFromPhoneNumber(number)), MediaType.APPLICATION_JSON).build();
+    }
+   
     //Author Sebastian, Mathias.
     @Path("/byhobby/{hobby}")
     @GET
@@ -81,14 +94,14 @@ public class PersonResource {
     public Response getAllPersonsByGivenCity(@PathParam("zipcode") String zipCode) throws Exception{
         return Response.ok(gson.toJson(facade.getAllPersonsWithGivenCity(zipCode)), MediaType.APPLICATION_JSON).build();
     }
-
-    @Path("{allzipcodes}")
+ 
+    @Path("/zip/allzip")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllZipCodes(@PathParam("allzipcodes") String zipCode) throws Exception{
         return Response.ok(gson.toJson(facade.getAllZipCodes()), MediaType.APPLICATION_JSON).build();
     }
-    
+   /* 
     @Path("{personwithhobby}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)

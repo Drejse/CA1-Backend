@@ -96,7 +96,7 @@ public class PersonResourceTest {
     @BeforeEach
     public void setUp() {
         EntityManager em = emf.createEntityManager();
-        /*
+        /**/
            hobby1 = new Hobby("Hobby1", "http://www.test1.com", "cat1", "type1");
             hobby2 = new Hobby("Hobby2", "http://www.test2.com", "cat2", "type2");
 
@@ -151,7 +151,7 @@ public class PersonResourceTest {
             }
             finally{
             em.close();
-                    }*/
+                    }
     }
 /*
     @Test
@@ -237,7 +237,57 @@ public class PersonResourceTest {
                 .statusCode(HttpStatus.OK_200.getStatusCode())
                 .body("status", is("removed id:"+id));
     }
+   
     */
+    @Test
+    public void testPersonsByGivenCity() {
+        given()
+                .contentType("application/Json")
+                .get("person/zip/"+ci1.getZipCode()).then()
+                .assertThat()
+                .statusCode(HttpStatus.OK_200.getStatusCode())
+                .body("all", hasSize(2));
+    }
+    
+    @Test
+    public void testPersonsbyGIvenHobby() {
+        given()
+                .contentType("application/Json")
+                .get("/byhobby/"+hobby1.getName()).then()
+                .assertThat()
+                .statusCode(HttpStatus.OK_200.getStatusCode())
+                .body("all", hasSize(2));
+    }
+    
+    @Test
+    public void testAllZipCodes() {
+        given()
+                .contentType("application/Json")
+                .get("/person/zip/allzip/").then()
+                .assertThat()
+                .statusCode(HttpStatus.OK_200.getStatusCode())
+                .body("all", hasSize(2));
+    }
+    
+    @Test
+    public void testPersonFromPhoneNumber() {
+        given()
+                .contentType("application/Json")
+                .get("/person/"+phone3.getNumber()).then()
+                .assertThat()
+                .statusCode(HttpStatus.OK_200.getStatusCode())
+                .body("firstName", is("Sebastian"));
+    }
+    
+    @Test
+    public void testNumberOfPersonByHobby() {
+        given()
+                .contentType("application/Json")
+                .get("/person/"+hobby1.getName()).then()
+                .assertThat()
+                .statusCode(HttpStatus.OK_200.getStatusCode())
+                .body("all", hasSize(2));
+    } 
 } 
 
 

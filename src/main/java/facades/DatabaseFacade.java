@@ -107,7 +107,7 @@ public class DatabaseFacade {
         EntityManager em = emf.createEntityManager();
         Person person = null;
         
-        TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p JOIN p.address h WHERE p.number = :number",Person.class);
+        TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p JOIN p.phoneList h WHERE h.number = :number",Person.class);
         query.setParameter("number", number);
         person = query.getSingleResult();
         
