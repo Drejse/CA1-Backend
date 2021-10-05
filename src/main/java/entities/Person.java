@@ -70,16 +70,7 @@ public class Person implements Serializable {
         this.phoneList = new ArrayList<>();
         
     }
-    
-     public Person(String firstName,String lastName,String email,
-      List<Phone> phoneList, Address address, List<Hobby> hobbyList) {
-    this.email = email;
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.phoneList = phoneList;
-    this.address = address;
-    this.hobbyList = hobbyList;
-  }
+  
      
      public Person(PersonDTO personDTO){
          this.id = personDTO.getId();

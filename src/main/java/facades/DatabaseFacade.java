@@ -7,8 +7,10 @@ import entities.Address;
 import entities.CityInfo;
 import entities.Hobby;
 import entities.Person;
+import entities.Phone;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
@@ -37,12 +39,59 @@ public class DatabaseFacade {
     }
 
     
-    
     /*
-    public PersonDTO addPerson(PersonDTO personDTO){
-        Person person = null;
-        List<HobbyDTO> hobbyList = personDTO.getHobbyList();
-    }*/
+  public PersonDTO createPerson(PersonDTO personDTO) {
+   
+      Person person = null;
+      List<HobbyDTO> hobbies = personDTO.getHobbyList();
+      List<HobbyDTO> h2 = new ArrayList<>();
+      personDTO.setHobbyList(h2);
+      EntityManager em = emf.createEntityManager();
+      try {
+        person = new Person(personDTO);
+
+        em.getTransaction().begin();
+        if(person.getAddress() != null && person.getAddress().getCityInfo() != null){
+            Address a = person.getAddress();
+            CityInfo ci = a.getCityInfo();
+            em.persist(ci);
+            a.setCityInfo(ci);
+            em.persist(a);
+        }
+        if (person.getPhoneList() != null) {
+          for (Phone p : person.getPhoneList()) {
+            
+              em.persist(p);
+              p.setPerson(person);
+              em.merge(p);
+            
+          }
+        }
+
+        em.persist(person);
+
+        if(person.getHobbyList() != null){
+          for(HobbyDTO h: hobbies){
+            Hobby ho = createHobby(h);
+            em.find(Hobby.class, ho.getId());
+            person.addHobby(ho);
+            em.merge(person);
+          }
+        }
+
+        em.merge(person);
+
+        em.getTransaction().commit();
+
+      } finally {
+        em.close();
+      }
+      return new PersonDTO(person);
+    } else {
+      throw new WebApplicationException("Please check your data", 400);
+    }
+  */
+
     
     
     
@@ -107,7 +156,7 @@ public class DatabaseFacade {
         EntityManager em = emf.createEntityManager();
         Person person = null;
         
-        TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p JOIN p.address h WHERE p.number = :number",Person.class);
+        TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p JOIN p.phoneList h WHERE p.number = :number",Person.class);
         query.setParameter("number", number);
         person = query.getSingleResult();
         

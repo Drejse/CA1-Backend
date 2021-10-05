@@ -67,6 +67,10 @@ public DatabaseFacadeTest(){}
        facade = DatabaseFacade.getDatabaseFacade(emf);
        personFacade = PersonFacade.getPersonFacade(emf);
     }
+
+    @AfterClass
+    public static void tearDownClass() throws Exception {
+    }
     
     
     @BeforeEach
@@ -143,22 +147,16 @@ public DatabaseFacadeTest(){}
         }
         assertEquals(55555555, p1.getPhoneList().get(0).getNumber());
     }
-    
-     @Test
-    void testAddHobbyToPerson() {
-        p1.addHobbies(hobby1);
-        p1.addHobbies(hobby2);
-        EntityManager em = emf.createEntityManager();
-        try {
-            em.getTransaction().begin();
-            em.merge(p1);
-            em.getTransaction().commit();
-        } finally {
-            em.close();
-        }
-        assertEquals(2, p1.getHobbyList().size());
-    }
-    
+    */
+    /*
+  @Test
+    public void testAddPerson() throws Exception {
+        System.out.println("createPerson");
+        Person newPerson = new Person("email","firstname","lastname");
+        newPerson = facade.addPerson(newPerson);
+        assertNotNull(newPerson.getId());
+    }*/
+    /*
     @Test
     void testRemovePhone() {
         phone1.setPerson(null);
@@ -196,6 +194,10 @@ public DatabaseFacadeTest(){}
     }
     */
 
+    @After
+    public void tearDown() throws Exception {
+    }
+
 
      /*
      @Test
@@ -206,13 +208,13 @@ public DatabaseFacadeTest(){}
         assertEquals(expResult, result.size());
     }
    */
-    //Author Tobias
+    
     @Test
-    public void testPersonFromPhoneNumber() throws Exception {
-        System.out.println("get person from phone number");
-        String number = p2.getPhoneList().get(2).getNumber();
-        Person result = facade.getPersonFromPhoneNumber(number);
-        assertEquals(p2.getId(), result.getId());
+    public void testgetPersonByPhoneNumber() throws Exception {
+        System.out.println("getPersonByPhoneNumber");
+        String phoneNumber = p1.getPhoneList().get(0).getNumber();
+        Person result = facade.getPersonFromPhoneNumber(phoneNumber);
+        assertEquals(p1.getId(), result.getId());
     }
 /*
     // Author Tobias & Sebastian
@@ -247,5 +249,149 @@ public DatabaseFacadeTest(){}
         assertEquals(expResult, result.size());
     }
  */
+
+    /**
+     * Test of getDatabaseFacade method, of class DatabaseFacade.
+     */
+    @Test
+    public void testGetDatabaseFacade() {
+        System.out.println("getDatabaseFacade");
+        EntityManagerFactory _emf = null;
+        DatabaseFacade expResult = null;
+        DatabaseFacade result = DatabaseFacade.getDatabaseFacade(_emf);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of deletePerson method, of class DatabaseFacade.
+     * @throws java.lang.Exception
+     */
+    @Test
+    public void testDeletePerson() throws Exception {
+        System.out.println("deletePerson");
+        int id = 0;
+        DatabaseFacade instance = null;
+        instance.deletePerson(id);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getPerson method, of class DatabaseFacade.
+     * @throws java.lang.Exception
+     */
+    @Test
+    public void testGetPerson() throws Exception {
+        System.out.println("getPerson");
+        int id = 0;
+        DatabaseFacade instance = null;
+        PersonDTO expResult = null;
+        PersonDTO result = instance.getPerson(id);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getAllPersons method, of class DatabaseFacade.
+     */
+    @Test
+    public void testGetAllPersons() throws Exception {
+        System.out.println("getAllPersons");
+        DatabaseFacade instance = null;
+        List<Person> expResult = null;
+        List<Person> result = instance.getAllPersons();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+  
+    /**
+     * Test of editPerson method, of class DatabaseFacade.
+     */
+    @Test
+    public void testEditPerson() throws Exception {
+        System.out.println("editPerson");
+        PersonDTO p = null;
+        DatabaseFacade instance = null;
+        PersonDTO expResult = null;
+        PersonDTO result = instance.editPerson(p);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getPersonFromPhoneNumber method, of class DatabaseFacade.
+     */
+    @Test
+    public void testGetPersonFromPhoneNumber() throws Exception {
+        System.out.println("getPersonFromPhoneNumber");
+        String number = "";
+        DatabaseFacade instance = null;
+        Person expResult = null;
+        Person result = instance.getPersonFromPhoneNumber(number);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getAllPersonsWithGivenHobby method, of class DatabaseFacade.
+     */
+    @Test
+    public void testGetAllPersonsWithGivenHobby() throws Exception {
+        System.out.println("getAllPersonsWithGivenHobby");
+        String hobby = "";
+        DatabaseFacade instance = null;
+        List<Person> expResult = null;
+        List<Person> result = instance.getAllPersonsWithGivenHobby(hobby);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getAllPersonsWithGivenCity method, of class DatabaseFacade.
+     */
+    @Test
+    public void testGetAllPersonsWithGivenCity() throws Exception {
+        System.out.println("getAllPersonsWithGivenCity");
+        String zipCode = "";
+        DatabaseFacade instance = null;
+        List<Person> expResult = null;
+        List<Person> result = instance.getAllPersonsWithGivenCity(zipCode);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getNumberOfPersonsWithGivenHobby method, of class DatabaseFacade.
+     */
+    @Test
+    public void testGetNumberOfPersonsWithGivenHobby() throws Exception {
+        System.out.println("getNumberOfPersonsWithGivenHobby");
+        String hobby = "";
+        DatabaseFacade instance = null;
+        int expResult = 0;
+        int result = instance.getNumberOfPersonsWithGivenHobby(hobby);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getAllZipCodes method, of class DatabaseFacade.
+     */
+    @Test
+    public void testGetAllZipCodes() throws Exception {
+        System.out.println("getAllZipCodes");
+        int expected = 2;
+        List<CityInfo> cityInfos = facade.getAllZipCodes();
+        assertEquals(expected, cityInfos.size());
+    }
 }
  

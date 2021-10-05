@@ -48,7 +48,12 @@ public class PersonResource {
         return Response.ok(gson.toJson("WELCOME!"), MediaType.APPLICATION_JSON).build();
     }
     
-    
+    @Path("/number/{number}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getPersonFromPhoneNumber(@PathParam("number")String number) throws Exception{
+        return Response.ok(gson.toJson(facade.getPersonFromPhoneNumber(number)),MediaType.APPLICATION_JSON).build();
+    }
     
     @Path("{id}")
     @GET
