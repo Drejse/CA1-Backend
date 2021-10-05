@@ -36,9 +36,9 @@ import utils.EMF_Creator;
 
 //Uncomment the line below, to temporarily disable this test
 //@Disabled
-public class DatabaseFacadeTest {
+public class DataBaseFacadeTest {
 
-public DatabaseFacadeTest(){}
+public DataBaseFacadeTest(){}
 
      private static EntityManagerFactory emf;
     private static DatabaseFacade facade;

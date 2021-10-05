@@ -25,8 +25,8 @@ public class Populator {
         EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory();
         EntityManager em = emf.createEntityManager();
         /**/
-        Hobby hobby1 = em.find(Hobby.class, "Skuespil");
-        Hobby hobby2 = em.find(Hobby.class, "Bowling");
+      //  Hobby hobby1 = em.find(Hobby.class, "Skuespil");
+      //  Hobby hobby2 = em.find(Hobby.class, "Bowling");
 
         CityInfo ci1 = em.find(CityInfo.class, "3450");
         CityInfo ci2 = em.find(CityInfo.class, "3400");
@@ -53,11 +53,11 @@ public class Populator {
         p1.addPhone(phone2);
         p2.addPhone(phone3);
 
-        /**/
+        /*
         p1.addHobbies(hobby1);
         p2.addHobbies(hobby2);
         p3.addHobbies(hobby1);
-
+        */
         em.getTransaction().begin();
         em.persist(p1);
         em.persist(p2);
@@ -65,8 +65,8 @@ public class Populator {
         em.getTransaction().commit();
         em.close();
 
-        p1.getHobbyList().forEach(x -> System.out.println(x));
-        hobby1.getPersonList().forEach(x -> System.out.println("persons from hobbies " + x));
+       // p1.getHobbyList().forEach(x -> System.out.println(x));
+       // hobby1.getPersonList().forEach(x -> System.out.println("persons from hobbies " + x));
 
         System.out.println("-------------------------------------");
 
