@@ -38,23 +38,28 @@ import utils.EMF_Creator;
 //@Disabled
 public class DatabaseFacadeTest {
 
+public DatabaseFacadeTest(){}
 
-    private static EntityManagerFactory emf;
+     private static EntityManagerFactory emf;
     private static DatabaseFacade facade;
     private static PersonFacade personFacade;
-
+     /*
     private Person p1 = new Person("Mathias", "Drejer", "m@email.dk");
-    private Person p2 = new Person("Sebastian", "Ebrecht", "s@email.dk");
-    private Phone phone1 = new Phone("55555555", "mathiasTele");
+    private Person p2 = new Person("Sebastian", "Ebrect", "s@email.dk");
+    private Phone phone1 = new Phone("55555555", "mathiasTele");;
     private Phone phone2 = new Phone("66666666", "sebastianTele");
-    private Address a1 = new Address("sejeTestvej1", "sejestevej1");
-    private Address a2 = new Address("coolTestvej2", "coolestevej2");
-    private CityInfo ci1 = new CityInfo("testby1", "testby1");
-    private CityInfo ci2 = new CityInfo("testby2", "testby1");
-    private Hobby hobby1 = new Hobby("Hobby1", "http://www.test1.com", "cat1", "type1");
-    private Hobby hobby2 = new Hobby("Hobby2", "http://www.test2.com", "cat2", "type2");
+    private Address a1 = new Address("Coolvej 15", "");
+    private CityInfo ci1 = new CityInfo("2000", "Frederiksberg");
+    private Hobby hobby1 = new Hobby("Fodbold", "http://www.test1.com", "cat1", "type1");
+    private Hobby hobby2 = new Hobby("Baseball", "http://www.test2.com", "cat2", "type2");
+    */
     
-       public DatabaseFacadeTest(){}
+    private static Person p1, p2, p3;
+    private static Hobby hobby1,hobby2;
+    private static CityInfo ci1,ci2;
+    private static Phone phone1,phone2,phone3;
+    private static Address a1,a2;
+       
         
        @BeforeAll
     public static void setUpClass() {
@@ -68,23 +73,64 @@ public class DatabaseFacadeTest {
     public void setUp(){
         EntityManager em = emf.createEntityManager();
   
+            hobby1 = new Hobby("Fodbold", "http://www.test1.com", "cat1", "type1");
+            hobby2 = new Hobby("Baseball", "http://www.test2.com", "cat2", "type2");
+
+            ci1 = new CityInfo("Monaco", "random1");
+            ci2 = new CityInfo("Frankfurt", "random2");
+
+            p1 = new Person("test@email.dk", "MathiasTEST", "DrejerTEST");
+            p2 = new Person("test2@email.dk", "SebastianTEST", "EbrechtTEST");
+            p3 = new Person("test3@email.dk", "TobiasTEST", "LingeTEST");
+
+            phone1 = new Phone("20202020", "mathiasTele");
+            phone2 = new Phone("30303030", "sebastianTele");
+            phone3 = new Phone("40404040", "TobbeTele");
+
+            a1 = new Address("TesterVejen40", "sejestevej1");
+            a2 = new Address("OmegaTesterVej", "coolestevej2");
+
+            a1.setCityInfo(ci1);
+            ci2.addAddress(a2);
+
+            p1.setAddress(a1);
+            a2.addPerson(p2);
+            p3.setAddress(a1);
+
+            p1.addPhone(phone1);
+            p1.addPhone(phone2);
+            p2.addPhone(phone3);
+
+            p1.addHobbies(hobby1);
+            p1.addHobbies(hobby2);
+            p2.addHobbies(hobby1);
+            
             try {
-            em.getTransaction().begin(); 
+            em.getTransaction().begin();
                 em.createNamedQuery("Hobby.deleteAllRows").executeUpdate();
                 em.createNamedQuery("Phone.deleteAllRows").executeUpdate();
                 em.createNamedQuery("Person.deleteAllRows").executeUpdate();
                 em.createNamedQuery("Address.deleteAllRows").executeUpdate();
                 em.createNamedQuery("CityInfo.deleteAllRows").executeUpdate();
-
+                
+                
+                em.persist(hobby1);
+                em.persist(hobby2);
+                em.persist(ci1);
+                em.persist(ci2);
+                
+                
                 em.persist(p1);
-                em.persist(p2);    
-                em.getTransaction().commit();
-        } finally {
+                em.persist(p2);
+                em.persist(p3);
+            em.getTransaction().commit();
+            }
+            finally{
             em.close();
-        }
+                    }
     }
- 
-       @Test
+ /*
+         @Test
     void testAddPhone() {
         p1.addPhone(phone1);
         EntityManager em = emf.createEntityManager();
@@ -138,6 +184,8 @@ public class DatabaseFacadeTest {
         actPDto = facade.editPerson(newPDto);
         assertEquals(actPDto, newPDto);
     }
+    */
+    /*
     
      @Test
     void testAddPerson() throws Exception {
@@ -146,9 +194,10 @@ public class DatabaseFacadeTest {
         person = facade.addPerson(person);
         assertNotNull(person.getId());
     }
+    */
 
 
-    
+     /*
      @Test
     void testGetAllPersons() throws Exception {
         System.out.println("get all persons");
@@ -156,7 +205,7 @@ public class DatabaseFacadeTest {
         List<Person> result = facade.getAllPersons();
         assertEquals(expResult, result.size());
     }
-    
+   */
     //Author Tobias
     @Test
     public void testPersonFromPhoneNumber() throws Exception {
@@ -165,7 +214,7 @@ public class DatabaseFacadeTest {
         Person result = facade.getPersonFromPhoneNumber(number);
         assertEquals(p2.getId(), result.getId());
     }
-
+/*
     // Author Tobias & Sebastian
     @Test
     public void testGetAllPersonsWithGivenHobby() throws Exception {
@@ -197,5 +246,6 @@ public class DatabaseFacadeTest {
         List<CityInfo> result = facade.getAllZipCodes();
         assertEquals(expResult, result.size());
     }
+ */
 }
  

@@ -8,6 +8,7 @@ package rest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dtos.PersonDTO;
+import entities.Person;
 import facades.DatabaseFacade;
 import facades.PersonFacade;
 //import facades.PersonFacade;
@@ -22,6 +23,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import org.graalvm.compiler.word.Word.Operation;
 import utils.EMF_Creator;
 
 
@@ -59,12 +61,42 @@ public class PersonResource {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response addPerson(String person) throws Exception {
-        PersonDTO pDTO = gson.fromJson(person, PersonDTO.class);
-        pDTO = facade.addPerson(pDTO.getFirstName(), pDTO.getLastName(), pDTO.getEmail());
-        return Response.ok(gson.toJson(pDTO), MediaType.APPLICATION_JSON).build();
+        public PersonDTO createNewPerson(PersonDTO p) {
+        return facade.addPerson(p);
+
+  } */
+    /*
+    //Author Sebastian, Mathias.
+    @Path("/byhobby/{hobby}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllPersonsByGivenHobby(@PathParam("hobby") String hobby) throws Exception{
+        return Response.ok(gson.toJson(facade.getAllPersonsWithGivenHobby(hobby)), MediaType.APPLICATION_JSON).build();
+    }
+
+    //Author Sebastian & Tobias
+    @Path("/zip/{zipcode}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllPersonsByGivenCity(@PathParam("zipcode") String zipCode) throws Exception{
+        return Response.ok(gson.toJson(facade.getAllPersonsWithGivenCity(zipCode)), MediaType.APPLICATION_JSON).build();
+    }
+
+    @Path("{allzipcodes}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllZipCodes(@PathParam("allzipcodes") String zipCode) throws Exception{
+        return Response.ok(gson.toJson(facade.getAllZipCodes()), MediaType.APPLICATION_JSON).build();
     }
     
+    @Path("{personwithhobby}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getNumberOfPersonsWithGivenHobby(@PathParam("personwithhobby") String hobby) throws Exception{
+        return Response.ok(gson.toJson(facade.getNumberOfPersonsWithGivenHobby(hobby)), MediaType.APPLICATION_JSON).build();
+    }*/
+}
+    /*
        @Path("{id}")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
@@ -84,7 +116,7 @@ public class PersonResource {
         PersonDTO pDto = facade.deletePerson(id);
         return Response.ok("{\"status\" : \"removed id:"+pDto.getId()+"\"}", MediaType.APPLICATION_JSON).build();
     }*/
-}
+
 
 
 

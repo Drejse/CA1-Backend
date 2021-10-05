@@ -5,7 +5,10 @@
  */
 package entities;
 
+import dtos.PhoneDTO;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -51,10 +54,23 @@ public class Phone implements Serializable {
 
     public Phone() {
     }
+    
 
     public Phone(String number, String description) {
         this.number = number;
         this.description = description;
+    }
+    
+     public Phone(PhoneDTO phoneDTO) {
+        this.id = phoneDTO.getId();
+        this.number = phoneDTO.getNumber();
+        this.description = phoneDTO.getDescription();
+    }
+    
+     public static List<Phone> getPhoneList(List<PhoneDTO> _phoneList) {
+        List<Phone> phones = new ArrayList();
+        _phoneList.forEach(phoneDTO -> phones.add(new Phone(phoneDTO)));
+        return phones;
     }
 
     public Integer getId() {

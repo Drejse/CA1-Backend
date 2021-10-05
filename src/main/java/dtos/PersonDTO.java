@@ -7,6 +7,7 @@ package dtos;
 
 
 import entities.Person;
+import java.util.List;
 
 /**
  *
@@ -19,16 +20,20 @@ public class PersonDTO {
     private String email;
     private AddressDTO adress;
 
+     private List<PhoneDTO> phoneList;
+    private List<HobbyDTO> hobbyList;
     public PersonDTO() {
     }
     
-    public PersonDTO(Person p) {
-         if (p.getId() != null) {
-            this.id = p.getId();
+    public PersonDTO(Person person) {
+         if (person.getId() != null) {
+            this.id = person.getId();
         }
-        this.email = p.getEmail();
-        this.firstName = p.getFirstName();
-        this.lastName = p.getLastName();
+        this.email = person.getEmail();
+        this.firstName = person.getFirstName();
+        this.lastName = person.getLastName();
+        this.phoneList = PhoneDTO.getDtos(person.getPhoneList());
+        this.hobbyList = HobbyDTO.getDtos(person.getHobbyList());
         
         
     }
@@ -41,7 +46,26 @@ public class PersonDTO {
         
     }
 
-    public AddressDTO getAdress() {
+    public List<PhoneDTO> getPhoneList() {
+        return phoneList;
+    }
+
+    public void setPhoneList(List<PhoneDTO> phoneList) {
+        this.phoneList = phoneList;
+    }
+
+    public List<HobbyDTO> getHobbyList() {
+        return hobbyList;
+    }
+
+    public void setHobbyList(List<HobbyDTO> hobbyList) {
+        this.hobbyList = hobbyList;
+    }
+     
+     
+     
+
+    public AddressDTO getAddress() {
         return adress;
     }
 

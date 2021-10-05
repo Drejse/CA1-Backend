@@ -71,7 +71,7 @@ public class Person implements Serializable {
         
     }
     
-     public Person(String email, String firstName, String lastName,
+     public Person(String firstName,String lastName,String email,
       List<Phone> phoneList, Address address, List<Hobby> hobbyList) {
     this.email = email;
     this.firstName = firstName;
@@ -80,6 +80,15 @@ public class Person implements Serializable {
     this.address = address;
     this.hobbyList = hobbyList;
   }
+     
+     public Person(PersonDTO personDTO){
+         this.id = personDTO.getId();
+         this.email = personDTO.getEmail();
+         this.firstName = personDTO.getFirstName();
+         this.lastName = personDTO.getLastName();
+         this.hobbyList = Hobby.getHobbyList(personDTO.getHobbyList());
+         this.phoneList = Phone.getPhoneList(personDTO.getPhoneList());
+     }
 
  
     

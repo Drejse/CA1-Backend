@@ -28,10 +28,10 @@ public class HobbyDTO {
         this.type = hobby.getType();
     }
     
-     public static List<HobbyDTO> getDtos(List<Hobby> hobbies) {
-        List<HobbyDTO> hobbiesDTO = new ArrayList();
-        hobbies.forEach(hobby -> hobbiesDTO.add(new HobbyDTO(hobby)));
-        return hobbiesDTO;
+     public static List<HobbyDTO> getDtos(List<Hobby> hobbyList) {
+        List<HobbyDTO> hobbyDTO = new ArrayList();
+        hobbyList.forEach(hobby -> hobbyDTO.add(new HobbyDTO(hobby)));
+        return hobbyDTO;
     }
 
     public String getName() {

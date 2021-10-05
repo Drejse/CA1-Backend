@@ -1,5 +1,6 @@
 package facades;
 
+import dtos.HobbyDTO;
 import dtos.PersonDTO;
 import dtos.PersonsDTO;
 import entities.Address;
@@ -36,43 +37,20 @@ public class DatabaseFacade {
     }
 
     
-     public Person addPerson(Person person)throws Exception{
-        
-        EntityManager em = emf.createEntityManager();
-        try{
-            em.getTransaction().begin();
-            try{
-                if(person.getAddress().getId() != null){
-                Address address = em.find(Address.class, person.getAddress().getId());
-                person.setAddress(address);
-                }
-            }catch(Exception e) {
-                System.out.println(e);
-            }
-            
-            em.persist(person);
-            if(person.getHobbyList().size() > 0) {
-                List<Hobby> hobbyArr = new ArrayList<>();
-                hobbyArr.addAll(person.getHobbyList());
-                person.getHobbyList().clear();
-                int arraySize = hobbyArr.size();
-                for(int i = 0; i < arraySize; i++) {
-                    Hobby hobby = em.find(Hobby.class, hobbyArr.get(i).getName());
-                    if(hobby == null){
-                        throw new Exception("Hobby not found");
-                    }else{
-                        person.addHobbies(hobby);
-                    }
-                }
-            }
-            em.getTransaction().commit();
-        }
-        finally{
-            em.close();
-        }
-        return person;
-    }
-
+    
+    /*
+    public PersonDTO addPerson(PersonDTO personDTO){
+        Person person = null;
+        List<HobbyDTO> hobbyList = personDTO.getHobbyList();
+    }*/
+    
+    
+    
+    
+    
+    
+    
+     
    
     public void deletePerson(int id) throws Exception {
         EntityManager em = emf.createEntityManager();
@@ -188,6 +166,10 @@ public class DatabaseFacade {
           }
         }
 */
+
+    
+
+   
         
 }
 

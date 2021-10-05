@@ -31,9 +31,9 @@ public class PhoneDTO {
     }
 
       public static List<PhoneDTO> getDtos(List<Phone> phones) {
-        List<PhoneDTO> phonesDTO = new ArrayList();
-        phones.forEach(phone -> phonesDTO.add(new PhoneDTO(phone)));
-        return phonesDTO;
+        List<PhoneDTO> phoneDTO = new ArrayList();
+        phones.forEach(phone -> phoneDTO.add(new PhoneDTO(phone)));
+        return phoneDTO;
     }
       
     public int getId() {
