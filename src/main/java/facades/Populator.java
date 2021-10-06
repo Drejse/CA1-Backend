@@ -23,36 +23,29 @@ public class Populator {
     public static void populate(){
         EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory();
         EntityManager em = emf.createEntityManager();
-        /*
-        Hobby hobby1 = em.find(Hobby.class,"Skuespil");
-       Hobby hobby2 = em.find(Hobby.class,"Bowling");
-        
-    */
-        CityInfo ci1 = em.find(CityInfo.class, "3450");
-        CityInfo ci2 = em.find(CityInfo.class, "3400");
-      
-       
-        Person p1 = new Person("Mathias","Drejer","MathiasDenBedste@email.dk");
-        Person p2 = new Person("Sebastian","Engelbrecht","RandomEmail@email.dk");
-        Person p3 = new Person("Tobias","Linge","SejeTobias@email.dk");
     
-        Phone phone1 = new Phone("22222222","MathiasTlf");
-        Phone phone2 = new Phone("33333333","SebbeTelef");
-        Phone phone3 = new Phone("55555555","TobbeTelefon");
-        
-        Address a1 = new Address("coolvej 5", "random");
-        Address a2 = new Address("awsomevej5", "random");
-       
-        a1.setCityInfo(ci1);
-        ci2.addAddress(a2);
+        //Hobby hobby1 = em.find(Hobby.class,hobby1.getId);
       
-        p1.setAddress(a1);
-        a2.addPerson(p2);
-        p3.setAddress(a1);
         
-        p1.addPhone(phone1);
-        p1.addPhone(phone2);
-        p2.addPhone(phone3);
+ 
+        CityInfo ci1 = em.find(CityInfo.class, "0800");
+
+      
+       
+        Person p1 = new Person("Ebbesand","Fyrste","FyrstenEbbesand@email.dk");
+    
+       Phone phone1 = new Phone(99898989,"ebbeTlf");
+        
+       Address a1 = new Address("Ebbevej 5", "Ebbeperium");
+       
+       a1.setCityInfo(ci1);
+
+      
+       p1.setAddress(a1);
+
+        
+       p1.addPhone(phone1);
+
         
         /*
        p1.addHobbies(hobby1);
@@ -60,23 +53,14 @@ public class Populator {
        p3.addHobbies(hobby1);
        */
     em.getTransaction().begin();
-        em.persist(p1);
-        em.persist(p2);
-        em.persist(p3);
+       // em.persist(p1);
+
     em.getTransaction().commit();
     em.close();
     
-        //p1.getHobbyList().forEach(x -> System.out.println(x));
-       // hobby1.getPersonList().forEach(x -> System.out.println("persons from hobbies "+x));
-        
-        System.out.println("-------------------------------------");
-        
-        a1.getPersons().forEach(x -> System.out.println("get person from a1 "+a1.getId()+"   ---   "+x));
-        System.out.println(p2.getAddress());
-       
-        System.out.println("Checking zip address");
-        System.out.println(p1.getAddress().getCityInfo().getZipCode());
-        ci1.getAddressList().forEach(x->x.getPersons().forEach(y->System.out.println(y.getFirstName())));
+    
+  
+    
     }
 
     

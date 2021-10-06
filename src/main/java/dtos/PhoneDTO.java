@@ -13,19 +13,19 @@ import java.util.List;
  * @author 45319
  */
 public class PhoneDTO {
-    private int id;
-    private String number;
+    private int number;
     private String description;
     
     public PhoneDTO() {}
     
     public PhoneDTO(Phone p) {
-        this.id = p.getId();
         this.number = p.getNumber();
         this.description = p.getDescription();
     }
-    
-    public PhoneDTO(String number, String description) {
+    public PhoneDTO(int number) {
+        this.number = number;
+    }
+    public PhoneDTO(int number, String description) {
         this.number = number;
         this.description = description;
     }
@@ -36,19 +36,12 @@ public class PhoneDTO {
         return phoneDTO;
     }
       
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getNumber() {
+    public int getNumber() {
         return number;
     }
 
-    public void setNumber(String number) {
+    public void setNumber(int number) {
         this.number = number;
     }
 

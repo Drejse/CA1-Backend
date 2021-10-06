@@ -64,12 +64,18 @@ public class Hobby implements Serializable {
         this.personList = new ArrayList<>();
     }
     
+        public Hobby(String name, String category) {
+        this.name = name;
+        this.category = category;
+        this.personList = new ArrayList<>();
+      }
     
      public static List<Hobby> getHobbyList(List<HobbyDTO> _hobbyList) {
         List<Hobby> hobbyList = new ArrayList();
         _hobbyList.forEach(hobbiesDTO -> hobbyList.add(new Hobby(hobbiesDTO)));
         return hobbyList;
     }
+
 
     public Integer getId() {
         return id;

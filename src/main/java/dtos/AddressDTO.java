@@ -16,25 +16,33 @@ public class AddressDTO {
     private Integer id;
     private String street;
     private String additionalInfo;
-    private CityInfo cityInfoId;
+    private CityInfoDTO cityInfo;
     
     public AddressDTO() {}
     
+   
+     
     public AddressDTO(Address a) {
-        if (a.getId() != null) {
-            this.id = a.getId();
-        }
-        
-        this.street = a.getStreet();
-        this.cityInfoId = a.getCityInfo();
+        this.id = a.getId() == null ? null : a.getId();
+        this.street = a.getStreet() == null ? null : a.getStreet();
         this.additionalInfo = a.getAdditionalInfo();
+        this.cityInfo = a.getCityInfo() == null ? null : new CityInfoDTO(a.getCityInfo());
     }
     
-    public AddressDTO(String street, String additionalInfo, CityInfo cityInfo) {
+     public AddressDTO(String street, String additionalInfo) {
+    this.street = street;
+    this.additionalInfo = additionalInfo;
+  }
+     
+       public AddressDTO(String street, String additionalInfo, CityInfoDTO cityInfo) {
         this.street = street;
         this.additionalInfo = additionalInfo;
-        this.cityInfoId = cityInfo;
+        this.cityInfo = cityInfo;
     }
+    
+   
+    
+     
 
     public Integer getId() {
         return id;
@@ -60,13 +68,17 @@ public class AddressDTO {
         this.additionalInfo = additionalInfo;
     }
 
-    public CityInfo getCityInfo() {
-        return cityInfoId;
+    public CityInfoDTO getCityInfo() {
+        return cityInfo;
     }
 
-    public void setCityInfo(CityInfo cityInfo) {
-        this.cityInfoId = cityInfo;
+    public void setCityInfo(CityInfoDTO cityInfo) {
+        this.cityInfo = cityInfo;
     }
+
+ 
+
+ 
     
     
 }

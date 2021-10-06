@@ -14,18 +14,15 @@ import java.util.List;
  * @author sebastianengelbrecht
  */
 public class CityInfosDTO {
-
-      public static List<CityInfoDTO> getDTO(List<CityInfo> cityInfos) {
-        List<CityInfoDTO> cityInfoDTO = new ArrayList();
-        cityInfos.forEach(cityInfo -> cityInfoDTO.add(new CityInfoDTO(cityInfo)));
-        return cityInfoDTO;
-    }
-
     List<CityInfoDTO> all = new ArrayList();
 
-    public List<CityInfoDTO> getAllCityInfo() {
-
-        return all;
+    public CityInfosDTO(List<CityInfo> cityInfoEntities) {
+        cityInfoEntities.forEach((ci) -> {
+            all.add(new CityInfoDTO(ci));
+        });
     }
 
+    public List<CityInfoDTO> getAll() {
+        return all;
+    }
 }

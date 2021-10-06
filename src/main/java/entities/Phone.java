@@ -44,7 +44,7 @@ public class Phone implements Serializable {
     private Integer id;
     @Size(max = 45)
     @Column(name = "number", unique=true) // ensures that no dublicates can be made because number is unique.
-    private String number;
+    private int number;
     @Size(max = 45)
     @Column(name = "description")
     private String description;
@@ -55,14 +55,15 @@ public class Phone implements Serializable {
     public Phone() {
     }
     
-
-    public Phone(String number, String description) {
+    public Phone(int number) {
+        this.number = number;
+    }
+    public Phone(int number, String description) {
         this.number = number;
         this.description = description;
     }
     
      public Phone(PhoneDTO phoneDTO) {
-        this.id = phoneDTO.getId();
         this.number = phoneDTO.getNumber();
         this.description = phoneDTO.getDescription();
     }
@@ -81,11 +82,11 @@ public class Phone implements Serializable {
         this.id = id;
     }
 
-    public String getNumber() {
+    public int getNumber() {
         return number;
     }
 
-    public void setNumber(String number) {
+    public void setNumber(int number) {
         this.number = number;
     }
 

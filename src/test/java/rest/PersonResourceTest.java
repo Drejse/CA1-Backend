@@ -96,7 +96,7 @@ public class PersonResourceTest {
     @BeforeEach
     public void setUp() {
         EntityManager em = emf.createEntityManager();
-        /*
+        
            hobby1 = new Hobby("Hobby1", "http://www.test1.com", "cat1", "type1");
             hobby2 = new Hobby("Hobby2", "http://www.test2.com", "cat2", "type2");
 
@@ -107,9 +107,9 @@ public class PersonResourceTest {
             p2 = new Person("Sebastian", "Ebrecth", "s@email.dk");
             p3 = new Person("Tobias", "linge", "t@email.dk");
 
-            phone1 = new Phone("55555555", "mathiasTele");
-            phone2 = new Phone("66666666", "sebastianTele");
-            phone3 = new Phone("77777777", "TobbeTele");
+            phone1 = new Phone(55555555, "mathiasTele");
+            phone2 = new Phone(66666666, "sebastianTele");
+            phone3 = new Phone(77777777, "TobbeTele");
 
             a1 = new Address("CoolTestVej 15", "sejestevej1");
             a2 = new Address("SejeTestVej 8", "coolestevej2");
@@ -151,14 +151,14 @@ public class PersonResourceTest {
             }
             finally{
             em.close();
-                    }*/
+                    }
     }
 /*
     @Test
     public void testWrongURL() {
         given().when().get("/person/url/findes/ikke").then().statusCode(500);
     }
-*/
+
     @Test
     public void testServerIsUp() {
         System.out.println("Testing is server UP");
@@ -166,7 +166,7 @@ public class PersonResourceTest {
     }
     
     
-    /*
+    
     @Test
     public void testGetAllPersons() {
                  given()
@@ -181,13 +181,13 @@ public class PersonResourceTest {
     public void testGetPersonById() {
         given()
                 .contentType("application/json")
-                .get("/person/"+p3.getId()).then()
+                .get("/person/"+p1.getId()).then()
                 .assertThat()
                 .statusCode(HttpStatus.OK_200.getStatusCode())
-                .body("firstName", is(p3.getFirstName()));
+                .body("Mathias", is(p1.getFirstName()));
     }
-    */
-    /*
+    
+    
     @Test
     public void testAddPerson() {
         JSONObject requestParams = new JSONObject();
@@ -205,7 +205,6 @@ public class PersonResourceTest {
                 .statusCode(HttpStatus.OK_200.getStatusCode())
                 .body("id", greaterThan(0));
     }
-    */
     /*
     @Test
     public void testUpdatePerson() {
@@ -224,8 +223,8 @@ public class PersonResourceTest {
                 .body("id", is(id))
                 .body("firstName", is("testPUT"));
     }
-    
- 
+   */
+ /*
     @Test
     public void testDeletePerson() {
         int id = p2.getId();
@@ -237,7 +236,58 @@ public class PersonResourceTest {
                 .statusCode(HttpStatus.OK_200.getStatusCode())
                 .body("status", is("removed id:"+id));
     }
-    */
+   
+    
+    @Test
+    public void testPersonsByGivenCity() {
+        given()
+                .contentType("application/Json")
+                .get("person/zip/"+ci1.getZipCode()).then()
+                .assertThat()
+                .statusCode(HttpStatus.OK_200.getStatusCode())
+                .body("all", hasSize(2));
+    }
+    
+    @Test
+    public void testPersonsbyGIvenHobby() {
+        given()
+                .contentType("application/Json")
+                .get("/byhobby/"+hobby1.getName()).then()
+                .assertThat()
+                .statusCode(HttpStatus.OK_200.getStatusCode())
+                .body("all", hasSize(2));
+    }
+    
+    @Test
+    public void testAllZipCodes() {
+        given()
+                .contentType("application/Json")
+                .get("/person/zip/allzip/").then()
+                .assertThat()
+                .statusCode(HttpStatus.OK_200.getStatusCode())
+                .body("all", hasSize(2));
+    }
+    
+    @Test
+    public void testPersonFromPhoneNumber() {
+        given()
+                .contentType("application/Json")
+                .get("/person/"+phone3.getNumber()).then()
+                .assertThat()
+                .statusCode(HttpStatus.OK_200.getStatusCode())
+                .body("firstName", is("Sebastian"));
+    }
+    
+    @Test
+    public void testNumberOfPersonByHobby() {
+        given()
+                .contentType("application/Json")
+                .get("/person/"+hobby1.getName()).then()
+                .assertThat()
+                .statusCode(HttpStatus.OK_200.getStatusCode())
+                .body("all", hasSize(2));
+    } 
+*/
 } 
 
 

@@ -1,5 +1,6 @@
 package facades;
 
+import dtos.CityInfosDTO;
 import dtos.HobbyDTO;
 import dtos.PersonDTO;
 import dtos.PersonsDTO;
@@ -38,8 +39,23 @@ public class DatabaseFacade {
         return instance;
     }
 
+    private HobbyDTO createHobby(String name, String wikiLink, String category, String type) {
+    EntityManager em = emf.createEntityManager();
+    Hobby hobby = new Hobby();
+    try {
+    em.getTransaction().begin();
+            hobby.setName(name);
+            hobby.setWikiLink(wikiLink);
+            hobby.setCategory(category);
+            hobby.setType(type);
+            em.persist(hobby);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+        return new HobbyDTO(hobby);
+  }
     
-    /*
   public PersonDTO createPerson(PersonDTO personDTO) {
    
       Person person = null;
@@ -72,9 +88,10 @@ public class DatabaseFacade {
 
         if(person.getHobbyList() != null){
           for(HobbyDTO h: hobbies){
-            Hobby ho = createHobby(h);
-            em.find(Hobby.class, ho.getId());
-            person.addHobby(ho);
+            HobbyDTO hobby = createHobby(h.getName(), h.getWikiLink(), h.getCategory(), h.getType());
+            em.find(Hobby.class, hobby.getId());
+            Hobby hobbyEntity = new Hobby(hobby);
+            person.addHobbies(hobbyEntity);
             em.merge(person);
           }
         }
@@ -87,20 +104,10 @@ public class DatabaseFacade {
         em.close();
       }
       return new PersonDTO(person);
-    } else {
-      throw new WebApplicationException("Please check your data", 400);
-    }
-  */
+  }
+  
 
-    
-    
-    
-    
-    
-    
-    
-     
-   
+  
     public void deletePerson(int id) throws Exception {
         EntityManager em = emf.createEntityManager();
         Person person;
@@ -152,37 +159,38 @@ public class DatabaseFacade {
         }
     }
     
-        public Person getPersonFromPhoneNumber(String number)throws Exception {
+        public PersonDTO getPersonFromPhoneNumber(int number)throws Exception {
         EntityManager em = emf.createEntityManager();
         Person person = null;
-        
-        TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p JOIN p.phoneList h WHERE p.number = :number",Person.class);
+      
+        TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p JOIN p.phoneList h WHERE h.number = :number",Person.class);
+
         query.setParameter("number", number);
         person = query.getSingleResult();
         
-        return person;
+        return new PersonDTO(person);
     }
     
          
     
-        public List<Person> getAllPersonsWithGivenHobby(String hobby)throws Exception{
+        public PersonsDTO getAllPersonsWithGivenHobby(String hobby)throws Exception{
         EntityManager em = emf.createEntityManager();
         List<Person> personList;
         TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p JOIN p.hobbyList h WHERE h.name = :name",Person.class);
         query.setParameter("name", hobby);
         personList = query.getResultList();
-        return personList;
+        return new PersonsDTO(personList);
         
     }
         
     
-        public List<Person> getAllPersonsWithGivenCity(String zipCode)throws Exception{
+        public PersonsDTO getAllPersonsWithGivenCity(String zipCode)throws Exception{
         EntityManager em = emf.createEntityManager();
         List<Person> personList;
         TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p JOIN p.address a join a.cityInfo c where c.zipCode = :zip",Person.class);
         query.setParameter("zip", zipCode);
         personList = query.getResultList();
-        return personList;
+        return new PersonsDTO(personList);
         } 
    
   
@@ -196,12 +204,12 @@ public class DatabaseFacade {
         
         
         
-        public List<CityInfo> getAllZipCodes() throws Exception{
+        public CityInfosDTO getAllZipCodes() throws Exception{
         EntityManager em = emf.createEntityManager();
         List<CityInfo> cityInfos;
         TypedQuery<CityInfo> query = em.createQuery("SELECT c FROM CityInfo c", CityInfo.class);
         cityInfos = query.getResultList();
-        return cityInfos;
+        return new CityInfosDTO(cityInfos);
 
     }
         
@@ -215,6 +223,8 @@ public class DatabaseFacade {
           }
         }
 */
+
+   
 
     
 

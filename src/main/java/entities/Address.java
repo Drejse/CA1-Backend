@@ -5,10 +5,12 @@
  */
 package entities;
 
+import dtos.AddressDTO;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -48,7 +50,7 @@ public class Address implements Serializable {
     private String additionalInfo;
    
   
-    @OneToMany(mappedBy = "address")
+    @OneToMany(mappedBy = "address", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Person> persons;
 
     @ManyToOne
@@ -56,12 +58,26 @@ public class Address implements Serializable {
     
     public Address() {
     }
+    
+     public Address(AddressDTO dto) {
+        this.street = dto.getStreet();
+        this.additionalInfo = dto.getAdditionalInfo();
+        this.cityInfo = new CityInfo(dto.getCityInfo());
+    }
 
     public Address(String street, String additionalInfo) {
         this.street = street;
         this.additionalInfo = additionalInfo;
-        this.persons = new ArrayList<>();
+        this.cityInfo = null;
     }
+    
+   public Address(String street,String additionalInfo, CityInfo cityInfo) {
+        this.street = street;
+        this.additionalInfo = additionalInfo;
+        this.cityInfo = cityInfo;
+    }
+
+ 
 
     public Integer getId() {
         return id;

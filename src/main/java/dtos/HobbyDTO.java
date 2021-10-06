@@ -14,6 +14,7 @@ import java.util.List;
  * @author 45319
  */
 public class HobbyDTO {
+    Integer id;
     private String name;
     private String wikiLink;
     private String category;
@@ -22,18 +23,35 @@ public class HobbyDTO {
     public HobbyDTO() {}
     
     public HobbyDTO(Hobby hobby) {
+        this.id = hobby.getId();
         this.name = hobby.getName();
         this.wikiLink = hobby.getWikiLink();
         this.category = hobby.getCategory();
         this.type = hobby.getType();
     }
-    
+    /*
      public static List<HobbyDTO> getDtos(List<Hobby> hobbyList) {
         List<HobbyDTO> hobbyDTO = new ArrayList();
         hobbyList.forEach(hobby -> hobbyDTO.add(new HobbyDTO(hobby)));
         return hobbyDTO;
+    }*/
+    
+    public HobbyDTO(String name, String wikiLink, String category, String type) {
+        this.name = name;
+        this.wikiLink = wikiLink;
+        this.category = category;
+        this.type = type;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    
     public String getName() {
         return name;
     }
@@ -64,6 +82,11 @@ public class HobbyDTO {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    @Override
+    public String toString() {
+        return "HobbyDTO{" + "name=" + name + ", wikiLink=" + wikiLink + ", category=" + category + ", type=" + type + '}';
     }
     
    

@@ -11,6 +11,7 @@ import dtos.PersonDTO;
 import entities.Person;
 import facades.DatabaseFacade;
 import facades.PersonFacade;
+import java.util.List;
 //import facades.PersonFacade;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.Consumes;
@@ -48,11 +49,15 @@ public class PersonResource {
         return Response.ok(gson.toJson("WELCOME!"), MediaType.APPLICATION_JSON).build();
     }
     
-    @Path("/number/{number}")
+
+  
+        
+    @Path("/allpersons")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getPersonFromPhoneNumber(@PathParam("number")String number) throws Exception{
-        return Response.ok(gson.toJson(facade.getPersonFromPhoneNumber(number)),MediaType.APPLICATION_JSON).build();
+    public Response getAllPersons() throws Exception{
+        List<Person> persons = facade.getAllPersons();
+        return Response.ok(gson.toJson(persons), MediaType.APPLICATION_JSON).build();
     }
     
     @Path("{id}")
@@ -62,16 +67,23 @@ public class PersonResource {
         PersonDTO pdto = facade.getPerson(id);
         return Response.ok(gson.toJson(pdto), MediaType.APPLICATION_JSON).build();
     }
-    /*
+    
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
         public PersonDTO createNewPerson(PersonDTO p) {
-        return facade.addPerson(p);
+        return facade.createPerson(p);
 
-  } */
-    /*
-    //Author Sebastian, Mathias.
+  } 
+   
+          @Path("/number/{number}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getPersonFromPhoneNumber(@PathParam("number")int number) throws Exception{
+        return Response.ok(gson.toJson(facade.getPersonFromPhoneNumber(number)),MediaType.APPLICATION_JSON).build();
+    }
+   
+      //Author Sebastian, Mathias.
     @Path("/byhobby/{hobby}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -86,22 +98,31 @@ public class PersonResource {
     public Response getAllPersonsByGivenCity(@PathParam("zipcode") String zipCode) throws Exception{
         return Response.ok(gson.toJson(facade.getAllPersonsWithGivenCity(zipCode)), MediaType.APPLICATION_JSON).build();
     }
-
-    @Path("{allzipcodes}")
+ 
+    @Path("/zip/allzip")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllZipCodes(@PathParam("allzipcodes") String zipCode) throws Exception{
+    public Response getAllZipCodes() throws Exception{
         return Response.ok(gson.toJson(facade.getAllZipCodes()), MediaType.APPLICATION_JSON).build();
     }
-    
-    @Path("{personwithhobby}")
+   /**/
+
+    /**
+     *
+     * @param hobby
+     * @return 
+     * @throws java.lang.Exception 
+     */
+
+    @Path("/byhobby/number/{personwithhobby}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getNumberOfPersonsWithGivenHobby(@PathParam("personwithhobby") String hobby) throws Exception{
         return Response.ok(gson.toJson(facade.getNumberOfPersonsWithGivenHobby(hobby)), MediaType.APPLICATION_JSON).build();
-    }*/
-}
-    /*
+    }
+
+
+    
        @Path("{id}")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
@@ -112,7 +133,7 @@ public class PersonResource {
         pDTO = facade.editPerson(pDTO);
         return Response.ok(gson.toJson(pDTO), MediaType.APPLICATION_JSON).build();
     }
-    
+   /*
     @Path("{id}")
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
@@ -120,8 +141,9 @@ public class PersonResource {
     public Response deletePerson (@PathParam("id")int id) throws Exception{
         PersonDTO pDto = facade.deletePerson(id);
         return Response.ok("{\"status\" : \"removed id:"+pDto.getId()+"\"}", MediaType.APPLICATION_JSON).build();
-    }*/
-
+    }
+*/
+}
 
 
 
