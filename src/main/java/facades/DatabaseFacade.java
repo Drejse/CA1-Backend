@@ -212,23 +212,8 @@ public class DatabaseFacade {
         return new CityInfosDTO(cityInfos);
 
     }
-        
-        /*
-         public long getPersonCount() {
-          EntityManager em = emf.createEntityManager();
-          try {
-            return (long) em.createQuery("SELECT COUNT(p) FROM Person p").getSingleResult();
-          } finally {
-            em.close();
-          }
-        }
-*/
 
-   
 
-    
-
-   
         
 }
 
