@@ -107,12 +107,14 @@ public class PersonResource {
     }
    /**/
 
+
     /**
      *
      * @param hobby
      * @return 
      * @throws java.lang.Exception 
      */
+
 
     @Path("/byhobby/number/{personwithhobby}")
     @GET
@@ -122,7 +124,10 @@ public class PersonResource {
     }
 
 
-    
+
+
+}
+    /*
        @Path("{id}")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
@@ -143,7 +148,7 @@ public class PersonResource {
         return Response.ok("{\"status\" : \"removed id:"+pDto.getId()+"\"}", MediaType.APPLICATION_JSON).build();
     }
 */
-}
+
 
 
 

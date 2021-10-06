@@ -14,15 +14,17 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import utils.EMF_Creator;
+
 /**
  *
  * @author madr1
  */
 public class Populator {
 
-    public static void populate(){
+    public static void populate() {
         EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory();
         EntityManager em = emf.createEntityManager();
+
     
         //Hobby hobby1 = em.find(Hobby.class,hobby1.getId);
       
@@ -63,10 +65,8 @@ public class Populator {
     
     }
 
-    
     public static void main(String[] args) {
-       populate();
+        populate();
     }
 
-    
 }

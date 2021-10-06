@@ -1,5 +1,9 @@
 package facades;
 
+
+
+import dtos.CityInfoDTO;
+
 import dtos.CityInfosDTO;
 import dtos.HobbyDTO;
 import dtos.PersonDTO;
@@ -212,6 +216,7 @@ public class DatabaseFacade {
         return new CityInfosDTO(cityInfos);
 
     }
+
 
 
         
