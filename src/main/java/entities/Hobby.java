@@ -9,6 +9,7 @@ import dtos.HobbyDTO;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -128,7 +129,4 @@ public class Hobby implements Serializable {
     public void setPersonList(List<Person> personList) {
         this.personList = personList;
     }
-
- 
-    
 }

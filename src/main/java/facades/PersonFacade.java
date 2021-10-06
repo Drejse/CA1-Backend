@@ -10,6 +10,7 @@ import dtos.CityInfosDTO;
 import dtos.PersonDTO;
 import dtos.PersonsDTO;
 import entities.Address;
+import entities.CityInfo;
 import entities.Person;
 import static facades.DatabaseFacade.getDatabaseFacade;
 import java.util.List;
@@ -34,11 +35,13 @@ public class PersonFacade {
     
     public PersonDTO getPersonFromPhoneNumber(int number) throws Exception{
         return databaseFacade.getPersonFromPhoneNumber(number);
+
        
     }
     
     public PersonDTO createPerson(PersonDTO personDTO){
         return databaseFacade.createPerson(personDTO);
+
     }
     
     public List<Person> getAllPersons() throws Exception {
@@ -65,8 +68,6 @@ public class PersonFacade {
         return json;
     }
 
-    
-    
     
     
 }

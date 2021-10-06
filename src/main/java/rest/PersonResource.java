@@ -107,12 +107,14 @@ public class PersonResource {
     }
    /**/
 
+
     /**
      *
      * @param hobby
      * @return 
      * @throws java.lang.Exception 
      */
+
 
     @Path("/byhobby/number/{personwithhobby}")
     @GET
@@ -122,7 +124,10 @@ public class PersonResource {
     }
 
 
-    
+
+
+}
+    /*
        @Path("{id}")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
