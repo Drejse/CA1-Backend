@@ -5,30 +5,28 @@
  */
 package dtos;
 
-import entities.Person;
+
+import entities.Hobby;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
- * @author madr1
+ * @author mathias
  */
-public class PersonsDTO {
-    
-    List<PersonDTO> all = new ArrayList();
+public class HobbiesDTO {
+    List<HobbyDTO> all = new ArrayList();
 
-    public PersonsDTO(List<Person> personEntities) {
-        personEntities.forEach((p) -> {
-            all.add(new PersonDTO(p));
+    public HobbiesDTO(List<Hobby> hobbies) {
+        hobbies.forEach((h) -> {
+            all.add(new HobbyDTO(h));
         });
     }
 
-
-    public List<PersonDTO> getAll() {
+    public List<HobbyDTO> getAll() {
         return all;
     }
-    
-    
-    
-    
+
 }
+
+

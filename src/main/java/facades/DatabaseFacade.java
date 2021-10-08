@@ -5,6 +5,7 @@ package facades;
 import dtos.CityInfoDTO;
 
 import dtos.CityInfosDTO;
+import dtos.HobbiesDTO;
 import dtos.HobbyDTO;
 import dtos.PersonDTO;
 import dtos.PersonsDTO;
@@ -110,24 +111,67 @@ public class DatabaseFacade {
       return new PersonDTO(person);
   }
   
+  
+    public Person addPerson(Person person)throws Exception{
+        //Error handling with same email
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            try {
+                if(person.getAddress().getId() != null){
+                Address address = em.find(Address.class, person.getAddress().getId());
+                person.setAddress(address);
+                }
+            } catch (Exception e) {
+            }
+            
+            person.getPhoneList().forEach(x->{
+                x.setPerson(person);
+            });
+            
+            
+            em.persist(person);
+            if (person.getHobbyList().size() > 0) {
+                List<Hobby> arr = new ArrayList<>();
+                arr.addAll(person.getHobbyList());
+                person.getHobbyList().clear();
+                int arraySize = arr.size();
+                for (int i = 0; i < arraySize; i++) {
+                    Hobby hob = em.find(Hobby.class, arr.get(i).getName());
+                    if (hob == null) {
+                        throw new Exception("One or more hobbies not in database");
+                    } else {
+                        person.addHobbies(hob);
+                    }
+                }
+            }
+            em.getTransaction().commit();
+        
+        }finally {
+            em.close();
+        }
+        return person;
+    }
+  
 
   
-    public void deletePerson(int id) throws Exception {
+   public boolean deletePerson(int id) throws Exception{
         EntityManager em = emf.createEntityManager();
         Person person;
         try {
             em.getTransaction().begin();
-                person = em.find(Person.class, id);
-                if(person == null){
-                    throw new Exception("could not delete, no id found");
-                }
-                em.remove(person);
-                em.getTransaction().commit();
-            
+            person = em.find(Person.class, id);
+            if (person == null) {
+                throw new Exception("Could not delete, provided id does not exist!");
+            }
+            em.remove(person);
+            em.getTransaction().commit();
+        }catch(Exception e){
+            System.out.println(e.getMessage());
         } finally {
             em.close();
         }
-        
+        return true;
     }
 
     
@@ -141,12 +185,7 @@ public class DatabaseFacade {
     }
 
     
-    public List<Person> getAllPersons() throws Exception{
-        EntityManager em = emf.createEntityManager();
-        TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p", Person.class);
-        List<Person> persons = query.getResultList();
-        return persons;
-    }
+    
 
     
     public PersonDTO editPerson(PersonDTO p) throws Exception {
@@ -214,12 +253,40 @@ public class DatabaseFacade {
         TypedQuery<CityInfo> query = em.createQuery("SELECT c FROM CityInfo c", CityInfo.class);
         cityInfos = query.getResultList();
         return new CityInfosDTO(cityInfos);
+    }
+        
+       
+    
+    
 
+    public List<Person> getAllPersons() {
+        EntityManager em = emf.createEntityManager();
+        TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p", Person.class);
+        List<Person> persons = query.getResultList();
+        return persons;
+    }
+    
+     public HobbiesDTO getAllHobbies()throws Exception{
+        EntityManager em = emf.createEntityManager();
+        List<Hobby> hobbies;
+            TypedQuery<Hobby> query = em.createQuery("SELECT h from Hobby h", Hobby.class);
+            hobbies = query.getResultList(); 
+            return new HobbiesDTO(hobbies);
     }
 
+    Person createPerson(Person person) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
+    Address getAddress(Address address) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
-        
+    public Object tilfojPerson(PersonDTO personDTO) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
+        
+
 
    

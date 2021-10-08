@@ -29,12 +29,12 @@ public class HobbyDTO {
         this.category = hobby.getCategory();
         this.type = hobby.getType();
     }
-    /*
+    
      public static List<HobbyDTO> getDtos(List<Hobby> hobbyList) {
         List<HobbyDTO> hobbyDTO = new ArrayList();
         hobbyList.forEach(hobby -> hobbyDTO.add(new HobbyDTO(hobby)));
         return hobbyDTO;
-    }*/
+    }
     
     public HobbyDTO(String name, String wikiLink, String category, String type) {
         this.name = name;

@@ -7,6 +7,7 @@ package facades;
 
 import com.google.gson.JsonObject;
 import dtos.CityInfosDTO;
+import dtos.HobbiesDTO;
 import dtos.PersonDTO;
 import dtos.PersonsDTO;
 import entities.Address;
@@ -44,13 +45,18 @@ public class PersonFacade {
 
     }
     
-    public List<Person> getAllPersons() throws Exception {
-        return databaseFacade.getAllPersons();
+    public PersonDTO getAllPersons() throws Exception {
+        return (PersonDTO) databaseFacade.getAllPersons();
     }
     
     public CityInfosDTO getAllZipCodes() throws Exception {
         return databaseFacade.getAllZipCodes();
     }
+   
+     
+     public HobbiesDTO getAllHobbies() throws Exception {
+         return databaseFacade.getAllHobbies();
+     }
     
     public PersonsDTO getAllPersonsWithGivenCity(String zipCode) throws Exception{
         return databaseFacade.getAllPersonsWithGivenCity(zipCode);
@@ -67,6 +73,55 @@ public class PersonFacade {
         json.addProperty("amount", amount);
         return json;
     }
+    
+      public PersonDTO addPerson(PersonDTO personDTO) throws Exception{
+        //convert to Person and address
+        Person person = new Person(personDTO);
+        Address address = new Address(personDTO.getAddress());
+        System.out.println("adddress" +address);
+
+        
+        try {
+            
+            address = databaseFacade.getAddress(address);
+        } catch (Exception e) {
+            
+        }
+
+        //Link address and person
+        //Husk alle hobbies og phones
+        person.setAddress(address);
+        //Persist and return person
+        return new PersonDTO(databaseFacade.createPerson(person));        
+    }
+      
+      ////////////////////////////////////////////////////////////////////////
+      public PersonDTO tilfojPerson(PersonDTO personDTO) throws Exception{
+        //convert to Person and address
+        Person person = new Person(personDTO);
+        Address address = new Address(personDTO.getAddress());
+        System.out.println("adddress" +address);
+
+        
+        try {
+            //check if address exist
+            address = databaseFacade.getAddress(address);
+        } catch (Exception e) {
+            //if not exits create address
+            
+        }
+
+        //Link address and person
+        //Husk alle hobbies og phones
+        person.setAddress(address);
+        //Persist and return person
+        return new PersonDTO(databaseFacade.addPerson(person));        
+    }
+    
+    
+    
+    
+   
 
     
     
